@@ -1,7 +1,6 @@
-import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
+import { StatefulPlugin, StateType } from '@edtr-io/core'
 
 import { HighlightEditor } from './editor'
-import { createIcon, faCode } from '@edtr-io/editor-ui'
 
 export const highlightState = StateType.object({
   text: StateType.string(''),
@@ -9,11 +8,10 @@ export const highlightState = StateType.object({
   lineNumbers: StateType.boolean(false)
 })
 
-export const highlightPlugin: LegacyStatefulPlugin<typeof highlightState> = {
-  Component: HighlightEditor,
-  state: highlightState,
-  title: 'Code',
-  description:
-    'Schreibe Code und lasse ihn je nach Programmiersprache highlighten.',
-  icon: createIcon(faCode)
+export function createHighlightPlugin(): StatefulPlugin<typeof highlightState> {
+  return {
+    Component: HighlightEditor,
+    config: {},
+    state: highlightState
+  }
 }

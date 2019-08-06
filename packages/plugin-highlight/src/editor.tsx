@@ -1,8 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
-import * as React from 'react'
-
-import { HighlightRenderer } from './renderer'
-import { highlightState } from '.'
+import { StatefulPluginProps } from '@edtr-io/core'
 import {
   EditorCheckbox,
   EditorInput,
@@ -11,6 +7,10 @@ import {
   faQuestionCircle,
   styled
 } from '@edtr-io/editor-ui'
+import * as React from 'react'
+
+import { HighlightRenderer } from './renderer'
+import { highlightState } from '.'
 
 const Textarea = styled.textarea({
   height: '250px',
@@ -52,7 +52,7 @@ const HelpIcon: React.FunctionComponent = () => (
 )
 
 export const HighlightEditor = (
-  props: LegacyStatefulPluginEditorProps<typeof highlightState>
+  props: StatefulPluginProps<typeof highlightState>
 ) => {
   const { state, focused, editable } = props
 

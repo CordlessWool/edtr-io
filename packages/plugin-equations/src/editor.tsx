@@ -121,7 +121,6 @@ export class EquationsEditor extends React.Component<
               }}
             </Droppable>
           </DragDropContext>
-          {/* eslint-enable @typescript-eslint/no-explicit-any */}
           <AddButtonWrapper>
             <AddButton onClick={this.addButton}>
               <Icon icon={faPlus} />
