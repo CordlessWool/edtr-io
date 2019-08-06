@@ -9,19 +9,21 @@ import {
 
 export type Plugin<
   State extends StateDescriptor = StateDescriptor,
-  Config = undefined
+  Config extends {} = {}
 > = StatelessPlugin<Config> | StatefulPlugin<State, Config>
 
-export interface StatelessPlugin<Config = undefined> {
+export interface StatelessPlugin<Config extends {} = {}> {
   Component: React.ComponentType<StatelessPluginProps<Config>>
+  config: Config
   onPaste?: (data: DataTransfer) => void | { state?: undefined }
 }
 
 export interface StatefulPlugin<
   State extends StateDescriptor,
-  Config = undefined
+  Config extends {} = {}
 > {
   Component: React.ComponentType<StatefulPluginProps<State, Config>>
+  config: Config
   state: State
   onPaste?: (
     data: DataTransfer
@@ -33,7 +35,7 @@ export interface StatefulPlugin<
   ) => { id: string }[]
 }
 
-export interface StatelessPluginProps<Config = undefined> {
+export interface StatelessPluginProps<Config extends {} = {}> {
   name: string
   config: Config
   editable?: boolean
@@ -42,19 +44,19 @@ export interface StatelessPluginProps<Config = undefined> {
 
 export interface StatefulPluginProps<
   State extends StateDescriptor = StateDescriptor,
-  Config = undefined
+  Config extends {} = {}
 > extends StatelessPluginProps<Config> {
   state: StateDescriptorReturnType<State>
 }
 
 export function isStatefulPlugin<
   State extends StateDescriptor,
-  Config = unknown
+  Config extends {} = {}
 >(plugin: Plugin<State, Config>): plugin is StatefulPlugin<State, Config> {
   return (plugin as StatefulPlugin<State, Config>).state !== undefined
 }
 
-export function isStatelessPlugin<Config = unknown>(
+export function isStatelessPlugin<Config extends {} = {}>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plugin: Plugin<any, Config>
 ): plugin is StatelessPlugin<Config> {
@@ -65,12 +67,12 @@ export function isStatelessPlugin<Config = unknown>(
 export type LegacyPlugin<
   State extends StateDescriptor = StateDescriptor,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Props extends Record<string, unknown> = any
+  Props extends {} = any
 > = LegacyStatelessPlugin<Props> | LegacyStatefulPlugin<State, Props>
 
 /** @deprecated */
 export interface LegacyStatelessPlugin<
-  Props extends Record<string, unknown> = {}
+  Props extends {} = {}
 > {
   Component: React.ComponentType<LegacyStatelessPluginEditorProps<Props>>
   onPaste?: (data: DataTransfer) => void | { state?: undefined }

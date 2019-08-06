@@ -1,17 +1,25 @@
-import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
+import { StatefulPlugin, StateType } from '@edtr-io/core'
+import * as React from 'react'
 
 import { BlockquoteRenderer } from './renderer'
-import { createIcon, faQuoteRight } from '@edtr-io/editor-ui'
 
 export const blockquoteState = StateType.child()
 
-export const blockquotePlugin: LegacyStatefulPlugin<typeof blockquoteState> = {
-  Component: BlockquoteRenderer,
-  state: blockquoteState,
-  title: 'Zitat',
-  description: 'Erzeuge eingerückten Text, zum Beispiel für Zitate.',
-  getFocusableChildren(state) {
-    return [state]
-  },
-  icon: createIcon(faQuoteRight)
+export function createBlockquotePlugin(
+  config: BlockquoteConfig = {
+    Component: 'blockquote'
+  }
+): StatefulPlugin<typeof blockquoteState, BlockquoteConfig> {
+  return {
+    Component: BlockquoteRenderer,
+    config,
+    state: blockquoteState,
+    getFocusableChildren(state) {
+      return [state]
+    }
+  }
+}
+
+export interface BlockquoteConfig {
+  Component: React.ComponentType | string
 }
