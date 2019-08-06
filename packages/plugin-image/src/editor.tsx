@@ -1,8 +1,4 @@
-import {
-  StateType,
-  LegacyStatefulPluginEditorProps,
-  OverlayContext
-} from '@edtr-io/core'
+import { StateType, StatefulPluginProps, OverlayContext } from '@edtr-io/core'
 import {
   Checkbox,
   EditorButton,
@@ -20,9 +16,9 @@ import * as React from 'react'
 
 import { Upload } from './upload'
 import { ImageRenderer } from './renderer'
-import { ImagePluginConfig, imageState } from '.'
+import { ImageConfig, imageState } from '.'
 
-type ImageProps = LegacyStatefulPluginEditorProps<typeof imageState> & {
+type ImageProps = StatefulPluginProps<typeof imageState, ImageConfig> & {
   renderIntoExtendedSettings?: (children: React.ReactNode) => React.ReactNode
 }
 
@@ -44,53 +40,49 @@ const OverlayButtonWrapper = styled.div({
   textAlign: 'right'
 })
 
-export function createImageEditor(
-  config: ImagePluginConfig
-): React.FunctionComponent<ImageProps> {
-  return function ImageEditor(props) {
-    const { editable, focused, state } = props
+export function ImageEditor(props: ImageProps) {
+  const { config, editable, focused, state } = props
 
-    StateType.usePendingFileUploader(state.src, config.upload)
+  StateType.usePendingFileUploader(state.src, config.upload)
 
-    const imageComponent =
-      state.src.value === '' ||
-      (StateType.isTempFile(state.src.value) && !state.src.value.loaded) ? (
-        <ImgPlaceholderWrapper>
-          <Icon icon={faImages} size="5x" />
-        </ImgPlaceholderWrapper>
-      ) : (
-        <ImageRenderer {...props} disableMouseEvents={editable} />
-      )
-    if (!editable) {
-      return imageComponent
-    }
-
-    return (
-      <React.Fragment>
-        {imageComponent}
-        {focused && (
-          <PrimarySettings>
-            <PrimaryControls {...props} config={config} />
-          </PrimarySettings>
-        )}
-        {props.renderIntoExtendedSettings ? (
-          props.renderIntoExtendedSettings(
-            <Controls {...props} config={config} />
-          )
-        ) : focused ? (
-          //use Editor Overlay, if renderIntoExtendedSettings is not supported
-          <Overlay>
-            <Controls {...props} config={config} />
-          </Overlay>
-        ) : null}
-      </React.Fragment>
+  const imageComponent =
+    state.src.value === '' ||
+    (StateType.isTempFile(state.src.value) && !state.src.value.loaded) ? (
+      <ImgPlaceholderWrapper>
+        <Icon icon={faImages} size="5x" />
+      </ImgPlaceholderWrapper>
+    ) : (
+      <ImageRenderer {...props} disableMouseEvents={editable} />
     )
+  if (!editable) {
+    return imageComponent
   }
+
+  return (
+    <React.Fragment>
+      {imageComponent}
+      {focused && (
+        <PrimarySettings>
+          <PrimaryControls {...props} config={config} />
+        </PrimarySettings>
+      )}
+      {props.renderIntoExtendedSettings ? (
+        props.renderIntoExtendedSettings(
+          <Controls {...props} config={config} />
+        )
+      ) : focused ? (
+        //use Editor Overlay, if renderIntoExtendedSettings is not supported
+        <Overlay>
+          <Controls {...props} config={config} />
+        </Overlay>
+      ) : null}
+    </React.Fragment>
+  )
 }
 
 function PrimaryControls(
   props: ImageProps & {
-    config: ImagePluginConfig
+    config: ImageConfig
   }
 ) {
   const overlayContext = React.useContext(OverlayContext)
@@ -173,7 +165,7 @@ function PrimaryControls(
 
 function Controls<T = unknown>(
   props: ImageProps & {
-    config: ImagePluginConfig
+    config: ImageConfig
   }
 ) {
   const { state } = props
