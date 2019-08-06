@@ -1,14 +1,16 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
+import { EditorInput, PrimarySettings } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
 import { GeogebraRenderer } from './renderer'
 import { geogebraState } from '.'
-import { EditorInput, PrimarySettings } from '@edtr-io/editor-ui'
 
 export const GeogebraEditor = (
-  props: LegacyStatefulPluginEditorProps<typeof geogebraState>
+  props: StatefulPluginProps<typeof geogebraState>
 ) => {
   const { focused, editable, state } = props
+
+  if (!editable) return <GeogebraRenderer {...props} />
 
   return (
     <React.Fragment>
