@@ -3,11 +3,6 @@ import {
   EditorTheme,
   EditorUiTheme
 } from '@edtr-io/editor-ui'
-import {
-  defaultRendererTheme,
-  RendererTheme,
-  RendererUiTheme
-} from '@edtr-io/renderer-ui'
 import * as R from 'ramda'
 import * as React from 'react'
 import styled, {
@@ -22,9 +17,6 @@ export { styled }
 export interface Theme {
   editor: EditorTheme
   editorUi: DeepPartial<EditorUiTheme>
-  renderer: RendererTheme
-  rendererUi: DeepPartial<RendererUiTheme>
-  plugins: Record<string, unknown>
 }
 
 export type CustomTheme = DeepPartial<Theme>
@@ -32,10 +24,7 @@ export type ThemeProps = StyledThemeProps<Theme>
 
 const defaultTheme: Theme = {
   editor: defaultEditorTheme,
-  editorUi: {},
-  renderer: defaultRendererTheme,
-  rendererUi: {},
-  plugins: {}
+  editorUi: {}
 }
 
 export function RootThemeProvider(
@@ -63,34 +52,7 @@ export function ThemeProvider(props: StyledThemeProviderProps<CustomTheme>) {
   return <StyledThemeProvider {...props} theme={theme} />
 }
 
-export function createPluginTheme<T>(
-  createDefaultTheme: PluginThemeFactory<T>
-) {
-  return (pluginName: string, theme: Theme): T => {
-    return (R.mergeDeepRight(
-      createDefaultTheme(theme),
-      (theme.plugins[pluginName] as DeepPartial<T>) || {}
-    ) as unknown) as T
-  }
-}
-export function usePluginTheme<T>(
-  pluginName: string,
-  createDefaultTheme: PluginThemeFactory<T>
-) {
-  const theme = useTheme()
-  return React.useMemo(
-    () => createPluginTheme(createDefaultTheme)(pluginName, theme),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [theme]
-  )
-}
-
-export type PluginThemeFactory<T> = (theme: {
-  editor: EditorTheme
-  renderer: RendererTheme
-}) => T
-
-type DeepPartial<T> = {
+export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? (DeepPartial<U>)[]
     : T[P] extends readonly (infer U)[]

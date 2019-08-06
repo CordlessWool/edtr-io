@@ -1,20 +1,18 @@
-import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
+import { StateType } from '@edtr-io/core'
+import { createExpandableBoxPlugin } from '@edtr-io/plugin-expandable-box'
 
-import { HintEditor } from './editor'
-import { createIcon, faLightbulb } from '@edtr-io/editor-ui'
 
 export const hintState = StateType.object({
   title: StateType.string(''),
   content: StateType.child('rows')
 })
 
-export const hintPlugin: LegacyStatefulPlugin<typeof hintState> = {
-  Component: HintEditor,
-  state: hintState,
-  title: 'Hinweis',
-  description: 'Gib zusätzliche Tipps zur Aufgabe in dieser ausklappbaren Box.',
-  icon: createIcon(faLightbulb),
-  getFocusableChildren(state) {
-    return [state().content]
-  }
+export function createHintPlugin() {
+  return createExpandableBoxPlugin({
+    title: 'Hinweis',
+    theme: {
+      toggleBackgroundColor: '#d9edf7',
+      containerBorderColor: '#333'
+    }
+  })
 }

@@ -1,18 +1,7 @@
 import * as React from 'react'
 
-import { createRendererUiTheme, RendererThemeProps, styled } from '../theme'
-import { faSortDown, faSortUp, Icon } from './icon'
-
-export const createExpandableBoxTheme = createRendererUiTheme<
-  ExpandableBoxTheme
->(theme => {
-  return {
-    containerBorderColor: 'transparent',
-    toggleBackgroundColor: theme.primary.background,
-    toggleBorderColor: 'transparent',
-    toggleColor: theme.primary.background
-  }
-})
+import { faSortDown, faSortUp, Icon, styled } from '@edtr-io/renderer-ui'
+import { ExpandableBoxConfig } from '.'
 
 const Wrapper = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   return {
@@ -21,17 +10,13 @@ const Wrapper = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
-const Toggle = styled.div<
-  {
-    collapsed: boolean
-    editable?: boolean
-    alwaysVisible?: boolean
-  } & RendererThemeProps
->(({ collapsed, editable, alwaysVisible, theme }) => {
-  const { toggleBackgroundColor, toggleColor } = createExpandableBoxTheme(
-    'expandableBox',
-    theme
-  )
+const Toggle = styled.div<{
+  collapsed: boolean
+  editable?: boolean
+  alwaysVisible?: boolean
+  config: ExpandableBoxConfig
+}>(({ collapsed, editable, alwaysVisible, config }) => {
+  const { toggleBackgroundColor, toggleColor } = config.theme
 
   return {
     backgroundColor:
@@ -58,27 +43,30 @@ const Content = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
-const StyledIcon = styled(Icon)<{ collapsed: boolean } & RendererThemeProps>(
-  ({ collapsed, theme }) => {
-    const { toggleColor } = createExpandableBoxTheme('expandableBox', theme)
-    return {
-      marginRight: '10px',
-      marginBottom: collapsed ? '3px' : '-3px',
-      color: toggleColor
-    }
+const StyledIcon = styled(Icon)<{
+  collapsed: boolean
+  config: ExpandableBoxConfig
+}>(({ collapsed, config }) => {
+  const { toggleColor } = config.theme
+  return {
+    marginRight: '10px',
+    marginBottom: collapsed ? '3px' : '-3px',
+    color: toggleColor
   }
-)
+})
 
 export function ExpandableBox({
   children,
   editable,
   alwaysVisible,
-  title
+  title,
+  config
 }: {
   children?: React.ReactNode
   editable?: boolean
   alwaysVisible?: boolean
   title: React.ReactNode
+  config: ExpandableBoxConfig
 }) {
   let [collapsed, setCollapsed] = React.useState(true)
 
@@ -91,11 +79,13 @@ export function ExpandableBox({
         onClick={() => {
           setCollapsed(!collapsed)
         }}
+        config={config}
       >
         <React.Fragment>
           <StyledIcon
             collapsed={collapsed}
             icon={collapsed ? faSortDown : faSortUp}
+            config={config}
           />
           <a>{title}</a>
         </React.Fragment>
@@ -103,10 +93,4 @@ export function ExpandableBox({
       <Content collapsed={collapsed}>{children}</Content>
     </Wrapper>
   )
-}
-
-export interface ExpandableBoxTheme {
-  containerBorderColor: string
-  toggleBackgroundColor: string
-  toggleColor: string
 }

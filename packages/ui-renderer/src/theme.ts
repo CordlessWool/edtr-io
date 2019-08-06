@@ -1,11 +1,4 @@
-import * as R from 'ramda'
-import * as React from 'react'
-import styled, {
-  ThemeContext as StyledThemeContext,
-  ThemeProps as StyledThemeProps
-} from 'styled-components'
-
-import { ExpandableBoxTheme } from './components'
+import styled from 'styled-components'
 
 export { styled }
 
@@ -66,45 +59,6 @@ export const defaultRendererTheme: RendererTheme = {
     background: '#d9534f'
   }
 }
-
-export interface RendererUiTheme {
-  expandableBox: ExpandableBoxTheme
-}
-
-export type RendererThemeProps = StyledThemeProps<{
-  renderer: RendererTheme
-  rendererUi: RendererUiTheme
-}>
-
-export function useRendererTheme(): {
-  renderer: RendererTheme
-  rendererUi: RendererUiTheme
-} {
-  return React.useContext(StyledThemeContext)
-}
-
-export function createRendererUiTheme<T>(
-  createDefaultTheme: (theme: RendererTheme) => T
-) {
-  return (
-    key: keyof RendererUiTheme,
-    theme: { renderer: RendererTheme; rendererUi: RendererUiTheme }
-  ): T => {
-    return (R.mergeDeepRight(
-      createDefaultTheme(theme.renderer),
-      ((theme.rendererUi[key] as unknown) as DeepPartial<T>) || {}
-    ) as unknown) as T
-  }
-}
-export function useRendererUiTheme<T>(
-  key: keyof RendererUiTheme,
-  createDefaultTheme: RendererUiThemeFactory<T>
-) {
-  const theme = useRendererTheme()
-  return createRendererUiTheme(createDefaultTheme)(key, theme)
-}
-
-export type RendererUiThemeFactory<T> = (theme: RendererTheme) => T
 
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
