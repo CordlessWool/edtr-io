@@ -16,9 +16,9 @@ export {
 export {
   Plugin,
   LegacyPlugin,
-  StatefulPluginEditorProps,
+  StatefulPluginProps,
   LegacyStatefulPluginEditorProps,
-  StatelessPluginEditorProps,
+  StatelessPluginProps,
   LegacyStatelessPluginEditorProps,
   StatefulPlugin,
   LegacyStatefulPlugin,

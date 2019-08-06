@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 
@@ -9,7 +9,7 @@ const Anchor = styled.a({
 })
 
 export function AnchorRenderer(
-  props: LegacyStatefulPluginEditorProps<typeof anchorState>
+  props: StatefulPluginProps<typeof anchorState>
 ) {
   return <Anchor id={props.state.value} />
 }

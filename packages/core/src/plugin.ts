@@ -13,7 +13,7 @@ export type Plugin<
 > = StatelessPlugin<Config> | StatefulPlugin<State, Config>
 
 export interface StatelessPlugin<Config = undefined> {
-  Component: React.ComponentType<StatelessPluginEditorProps<Config>>
+  Component: React.ComponentType<StatelessPluginProps<Config>>
   onPaste?: (data: DataTransfer) => void | { state?: undefined }
 }
 
@@ -21,7 +21,7 @@ export interface StatefulPlugin<
   State extends StateDescriptor,
   Config = undefined
 > {
-  Component: React.ComponentType<StatefulPluginEditorProps<State, Config>>
+  Component: React.ComponentType<StatefulPluginProps<State, Config>>
   state: State
   onPaste?: (
     data: DataTransfer
@@ -33,17 +33,17 @@ export interface StatefulPlugin<
   ) => { id: string }[]
 }
 
-export interface StatelessPluginEditorProps<Config = undefined> {
+export interface StatelessPluginProps<Config = undefined> {
   name: string
   config: Config
   editable?: boolean
   focused?: boolean
 }
 
-export interface StatefulPluginEditorProps<
+export interface StatefulPluginProps<
   State extends StateDescriptor = StateDescriptor,
   Config = undefined
-> extends StatelessPluginEditorProps<Config> {
+> extends StatelessPluginProps<Config> {
   state: StateDescriptorReturnType<State>
 }
 

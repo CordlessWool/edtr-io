@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { Icon, faLink, EditorInput, styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
@@ -6,9 +6,10 @@ import { AnchorRenderer } from './renderer'
 import { anchorState } from '.'
 
 const StyledIcon = styled(Icon)({ marginRight: '5px' })
-export const AnchorEditor = (
-  props: LegacyStatefulPluginEditorProps<typeof anchorState>
-) => {
+
+export function AnchorEditor(
+  props: StatefulPluginProps<typeof anchorState>
+) {
   const { editable, focused, state } = props
   return (
     <React.Fragment>
