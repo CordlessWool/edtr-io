@@ -1,6 +1,6 @@
+import { StateType, StatefulPlugin } from '@edtr-io/core'
+
 import { EquationsEditor } from './editor'
-import { StateType, LegacyStatefulPlugin } from '@edtr-io/core'
-import { createIcon, faEquals } from '@edtr-io/editor-ui'
 
 export const StepProps = StateType.object({
   left: StateType.child(),
@@ -12,21 +12,21 @@ export const equationsState = StateType.object({
   steps: StateType.list(StepProps)
 })
 
-export const equationsPlugin: LegacyStatefulPlugin<typeof equationsState> = {
-  Component: EquationsEditor,
-  state: equationsState,
-  title: 'Gleichungen',
-  description: 'Erzeuge einfach übersichtliche mathematische Gleichungen.',
-  icon: createIcon(faEquals),
-  getFocusableChildren(state) {
-    return state()
-      .steps()
-      .reduce(
-        (children, step) => {
-          return [...children, step().left, step().right, step().transform]
-        },
-        [] as { id: string }[]
-      )
+export function createEquationsPlugin(): StatefulPlugin<typeof equationsState> {
+  return {
+    Component: EquationsEditor,
+    config: {},
+    state: equationsState,
+    getFocusableChildren(state) {
+      return state()
+        .steps()
+        .reduce(
+          (children, step) => {
+            return [...children, step().left, step().right, step().transform]
+          },
+          [] as { id: string }[]
+        )
+    }
   }
 }
 

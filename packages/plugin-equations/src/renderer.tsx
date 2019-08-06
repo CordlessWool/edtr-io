@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { StatefulPluginProps, StateType } from '@edtr-io/core'
 import * as R from 'ramda'
 import * as React from 'react'
 
@@ -14,7 +14,7 @@ enum Phase {
 }
 
 export class EquationsRenderer extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof equationsState>,
+  StatefulPluginProps<typeof equationsState>,
   EquationsRendererState
 > {
   public state: EquationsState = {
