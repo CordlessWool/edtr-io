@@ -1,18 +1,17 @@
-import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { StatefulPluginProps, StateType } from '@edtr-io/core'
 import {
   EditorButton,
-  Icon,
-  faRedoAlt,
-  styled,
+  edtrClose,
   EdtrIcon,
-  edtrClose
+  faRedoAlt,
+  Icon,
+  styled
 } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
-import { FileRenderer } from './renderer'
-import { UploadedFile } from './types'
+import { FileRenderer, FilesRenderer } from './renderer'
 import { parseFileType, Upload } from './upload'
-import { fileState, getFilesFromDataTransfer } from '.'
+import { FilesConfig, filesState, getFilesFromDataTransfer } from '.'
 
 export const Wrapper = styled.div({
   display: 'inline-block',
@@ -33,100 +32,99 @@ export const Center = styled.div({
   alignItems: 'center'
 })
 
-export function createFilesEditor(
-  uploadHandler: StateType.UploadHandler<UploadedFile>
-): React.FunctionComponent<LegacyStatefulPluginEditorProps<typeof fileState>> {
-  return function FilesEditor(props) {
-    const { focused, state } = props
+export function FilesEditor(
+  props: StatefulPluginProps<typeof filesState, FilesConfig>
+) {
+  const { config, focused, state } = props
+  StateType.usePendingFilesUploader(state.items, config.upload)
 
-    StateType.usePendingFilesUploader(state.items, uploadHandler)
-
-    function onPaste(data: DataTransfer) {
-      const files = getFilesFromDataTransfer(data)
-      if (files.length) {
-        files.forEach(file => {
-          state.insert(state().length, {
-            pending: file
-          })
+  function onPaste(data: DataTransfer) {
+    const files = getFilesFromDataTransfer(data)
+    if (files.length) {
+      files.forEach(file => {
+        state.insert(state().length, {
+          pending: file
         })
-      }
+      })
     }
+  }
 
-    return (
-      <div
-        onPaste={event => {
-          onPaste(event.clipboardData)
-        }}
-      >
-        {state.items.map((file, i) => {
-          if (!StateType.isTempFile(file.value)) {
-            // finished uploading
-            return <FileRenderer key={i} file={file.value} />
-          }
+  if (!props.editable) return <FilesRenderer {...props} />
 
-          if (file.value.loaded) {
-            // finished loading as DataUrl, being uploaded atm
-            const tmpFile = file.value.loaded
-            return (
-              <Temporary key={i}>
-                <Center>
-                  <FileRenderer
-                    file={{
-                      location: tmpFile.dataUrl,
-                      name: tmpFile.file.name,
-                      type: parseFileType(tmpFile.file.name)
-                    }}
-                  />
+  return (
+    <div
+      onPaste={event => {
+        onPaste(event.clipboardData)
+      }}
+    >
+      {state.items.map((file, i) => {
+        if (!StateType.isTempFile(file.value)) {
+          // finished uploading
+          return <FileRenderer key={i} file={file.value} />
+        }
+
+        if (file.value.loaded) {
+          // finished loading as DataUrl, being uploaded atm
+          const tmpFile = file.value.loaded
+          return (
+            <Temporary key={i}>
+              <Center>
+                <FileRenderer
+                  file={{
+                    location: tmpFile.dataUrl,
+                    name: tmpFile.file.name,
+                    type: parseFileType(tmpFile.file.name)
+                  }}
+                />
+                <EditorButton onClick={() => state.remove(i)}>
+                  <EdtrIcon icon={edtrClose} />
+                </EditorButton>
+              </Center>
+            </Temporary>
+          )
+        }
+
+        if (file.value.failed) {
+          const tmpFile = file.value.failed
+          return (
+            <Failed key={i}>
+              <Center>
+                <FileRenderer
+                  file={{
+                    location: '',
+                    name: tmpFile.name,
+                    type: parseFileType(tmpFile.name)
+                  }}
+                />
+                <span>Fehlgeschlagen</span>
+                <span>
+                  <EditorButton
+                    onClick={() => file.upload(tmpFile, config.upload)}
+                  >
+                    <Icon icon={faRedoAlt} />
+                  </EditorButton>
                   <EditorButton onClick={() => state.remove(i)}>
                     <EdtrIcon icon={edtrClose} />
                   </EditorButton>
-                </Center>
-              </Temporary>
-            )
-          }
+                </span>
+              </Center>
+            </Failed>
+          )
+        }
 
-          if (file.value.failed) {
-            const tmpFile = file.value.failed
-            return (
-              <Failed key={i}>
-                <Center>
-                  <FileRenderer
-                    file={{
-                      location: '',
-                      name: tmpFile.name,
-                      type: parseFileType(tmpFile.name)
-                    }}
-                  />
-                  <span>Fehlgeschlagen</span>
-                  <span>
-                    <EditorButton
-                      onClick={() => file.upload(tmpFile, uploadHandler)}
-                    >
-                      <Icon icon={faRedoAlt} />
-                    </EditorButton>
-                    <EditorButton onClick={() => state.remove(i)}>
-                      <EdtrIcon icon={edtrClose} />
-                    </EditorButton>
-                  </span>
-                </Center>
-              </Failed>
-            )
-          }
-
-          return null
-        })}
-        {focused ? (
-          <Upload
-            onFiles={files => {
-              files.forEach(file => {
-                state.insert(state.items.length, {
-                  pending: file
-                })
+        return null
+      })}
+      {focused ? (
+        <Upload
+          onFiles={files => {
+            files.forEach(file => {
+              state.insert(state.items.length, {
+                pending: file
               })
-            }}
-          />
-        ) : null}
-      </div>
-    )
-  }
+            })
+          }}
+        />
+      ) : null}
+    </div>
+  )
 }
