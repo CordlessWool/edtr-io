@@ -1,4 +1,4 @@
-import { Plugin } from '@edtr-io/core'
+import { LegacyPlugin } from '@edtr-io/core'
 import { imagePlugin, readFile } from '@edtr-io/demo/src/plugin-image'
 import { anchorPlugin } from '@edtr-io/plugin-anchor'
 import { blockquotePlugin } from '@edtr-io/plugin-blockquote'
@@ -29,7 +29,7 @@ const mockUploadFileHandler = (file: File): Promise<UploadedFile> => {
   })
 }
 
-export const plugins: Record<string, Plugin> = {
+export const plugins: Record<string, LegacyPlugin> = {
   // Must be placed before files for onPaste
   image: imagePlugin,
   anchor: anchorPlugin,

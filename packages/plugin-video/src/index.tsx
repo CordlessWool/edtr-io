@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 import * as React from 'react'
 
 import { VideoEditor } from './editor'
@@ -6,7 +6,7 @@ import { VideoRenderer } from './renderer'
 import { createIcon, faFilm } from '@edtr-io/editor-ui'
 
 export const videoState = StateType.string()
-export const videoPlugin: StatefulPlugin<typeof videoState> = {
+export const videoPlugin: LegacyStatefulPlugin<typeof videoState> = {
   //eslint-disable-next-line react/display-name
   Component: props =>
     props.editable ? <VideoEditor {...props} /> : <VideoRenderer {...props} />,

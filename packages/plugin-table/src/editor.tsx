@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 import Textarea from 'react-textarea-autosize'
@@ -26,7 +26,7 @@ const MarkdownTextarea = styled(Textarea)({
 })
 
 export const TableEditor = (
-  props: StatefulPluginEditorProps<typeof tableState>
+  props: LegacyStatefulPluginEditorProps<typeof tableState>
 ) => {
   const { focused, state } = props
   return (

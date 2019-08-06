@@ -1,4 +1,4 @@
-import { Plugin } from '../plugin'
+import { LegacyPlugin } from '../plugin'
 
 /**
  * Store state
@@ -8,7 +8,7 @@ export type EditorState = Record<string, ScopeState>
 export interface ScopeState {
   plugins: {
     defaultPlugin: string
-    plugins: Record<string, Plugin>
+    plugins: Record<string, LegacyPlugin>
   }
   documents: Record<string, DocumentState>
   focus: string | null

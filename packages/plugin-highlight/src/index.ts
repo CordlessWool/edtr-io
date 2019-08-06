@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 
 import { HighlightEditor } from './editor'
 import { createIcon, faCode } from '@edtr-io/editor-ui'
@@ -9,7 +9,7 @@ export const highlightState = StateType.object({
   lineNumbers: StateType.boolean(false)
 })
 
-export const highlightPlugin: StatefulPlugin<typeof highlightState> = {
+export const highlightPlugin: LegacyStatefulPlugin<typeof highlightState> = {
   Component: HighlightEditor,
   state: highlightState,
   title: 'Code',

@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 
 import { HintEditor } from './editor'
 import { createIcon, faLightbulb } from '@edtr-io/editor-ui'
@@ -8,7 +8,7 @@ export const hintState = StateType.object({
   content: StateType.child('rows')
 })
 
-export const hintPlugin: StatefulPlugin<typeof hintState> = {
+export const hintPlugin: LegacyStatefulPlugin<typeof hintState> = {
   Component: HintEditor,
   state: hintState,
   title: 'Hinweis',

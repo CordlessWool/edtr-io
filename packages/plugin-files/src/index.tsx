@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 import { faFileAlt, createIcon } from '@edtr-io/editor-ui'
 
 import { createFilesEditor } from './editor'
@@ -16,7 +16,7 @@ export const fileState = StateType.list(
 
 export function createFilePlugin(
   config: UploadFileConfig
-): StatefulPlugin<typeof fileState> {
+): LegacyStatefulPlugin<typeof fileState> {
   const FilesEditor = createFilesEditor(config.upload)
   return {
     //eslint-disable-next-line react/display-name

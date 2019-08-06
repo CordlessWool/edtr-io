@@ -1,4 +1,4 @@
-import { Plugin } from '../../plugin'
+import { LegacyPlugin } from '../../plugin'
 import { createAction, createActionWithoutPayload } from '../helpers'
 import { ActionFromActionCreator } from '../types'
 
@@ -9,7 +9,7 @@ export const initRoot = createAction<
       plugin?: string
       state?: unknown
     }
-    plugins: Record<string, Plugin>
+    plugins: Record<string, LegacyPlugin>
     defaultPlugin: string
   }
 >('InitRoot')

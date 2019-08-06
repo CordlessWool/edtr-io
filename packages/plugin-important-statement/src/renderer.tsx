@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import * as React from 'react'
 import { styled } from '@edtr-io/renderer-ui'
 import { importantStatementState } from '.'
@@ -9,7 +9,7 @@ const Box = styled.div({
 })
 
 export function ImportantStatementRenderer(
-  props: StatefulPluginEditorProps<typeof importantStatementState>
+  props: LegacyStatefulPluginEditorProps<typeof importantStatementState>
 ) {
   return <Box>{props.state.render()}</Box>
 }

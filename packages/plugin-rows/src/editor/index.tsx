@@ -1,5 +1,5 @@
 import {
-  StatefulPluginEditorProps,
+  LegacyStatefulPluginEditorProps,
   selectors,
   useStore,
   ScopeContext
@@ -10,7 +10,7 @@ import { rowsState } from '..'
 import { Row } from './row'
 
 export const RowsEditor = (
-  props: StatefulPluginEditorProps<typeof rowsState>
+  props: LegacyStatefulPluginEditorProps<typeof rowsState>
 ) => {
   const rows = props.state
   const store = useStore()

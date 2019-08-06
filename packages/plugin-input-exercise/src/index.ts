@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 
 import { InputExerciseEditor } from './editor'
 import { createIcon, faKeyboard } from '@edtr-io/editor-ui'
@@ -12,7 +12,7 @@ export const inputExerciseState = StateType.object({
   correctAnswers: StateType.list(StateType.string('')),
   wrongAnswers: StateType.list(wrongAnswerObject)
 })
-export const inputExercisePlugin: StatefulPlugin<typeof inputExerciseState> = {
+export const inputExercisePlugin: LegacyStatefulPlugin<typeof inputExerciseState> = {
   Component: InputExerciseEditor,
   state: inputExerciseState,
   title: 'Eingabefeld',

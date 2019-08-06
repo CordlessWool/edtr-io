@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { OverlayContextValue, Plugin, DocumentState } from '@edtr-io/core'
+import { OverlayContextValue, LegacyPlugin, DocumentState } from '@edtr-io/core'
 import { TextPlugin } from '..'
 import { SlateEditorAdditionalProps } from './editor'
 
@@ -13,5 +13,5 @@ export type SlatePluginClosure = React.RefObject<{
   name: string
   parent?: SlateEditorAdditionalProps
   replace?: (options?: DocumentState) => void
-  plugins: Record<string, Plugin>
+  plugins: Record<string, LegacyPlugin>
 }>

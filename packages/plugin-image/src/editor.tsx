@@ -1,6 +1,6 @@
 import {
   StateType,
-  StatefulPluginEditorProps,
+  LegacyStatefulPluginEditorProps,
   OverlayContext
 } from '@edtr-io/core'
 import {
@@ -22,7 +22,7 @@ import { Upload } from './upload'
 import { ImageRenderer } from './renderer'
 import { ImagePluginConfig, imageState } from '.'
 
-type ImageProps = StatefulPluginEditorProps<typeof imageState> & {
+type ImageProps = LegacyStatefulPluginEditorProps<typeof imageState> & {
   renderIntoExtendedSettings?: (children: React.ReactNode) => React.ReactNode
 }
 

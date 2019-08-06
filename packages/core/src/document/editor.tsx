@@ -4,9 +4,9 @@ import { HotKeys } from 'react-hotkeys'
 
 import { connect } from '../editor-context'
 import {
-  isStatefulPlugin,
-  StatefulPluginEditorProps,
-  StatelessPluginEditorProps
+  isLegacyStatefulPlugin,
+  LegacyStatefulPluginEditorProps,
+  LegacyStatelessPluginEditorProps
 } from '../plugin'
 import { StoreDeserializeHelpers } from '../plugin-state'
 import { actions, selectors, ScopedActionCreator } from '../store'
@@ -55,7 +55,7 @@ export const DocumentEditor = connect<
       focused &&
       container.current &&
       plugin &&
-      (!isStatefulPlugin(plugin) || !plugin.getFocusableChildren)
+      (!isLegacyStatefulPlugin(plugin) || !plugin.getFocusableChildren)
     ) {
       container.current.focus()
     }
@@ -80,7 +80,7 @@ export const DocumentEditor = connect<
       if (
         e &&
         plugin &&
-        isStatefulPlugin(plugin) &&
+        isLegacyStatefulPlugin(plugin) &&
         typeof plugin.onKeyDown === 'function' &&
         !plugin.onKeyDown(e)
       ) {
@@ -101,7 +101,7 @@ export const DocumentEditor = connect<
       return null
     }
     let state: unknown
-    if (isStatefulPlugin(plugin)) {
+    if (isLegacyStatefulPlugin(plugin)) {
       const onChange = (
         updater: (value: unknown, helpers: StoreDeserializeHelpers) => void
       ) => {
@@ -116,7 +116,7 @@ export const DocumentEditor = connect<
       })
     }
     const Comp = plugin.Component as React.ComponentType<
-      StatefulPluginEditorProps | StatelessPluginEditorProps
+      LegacyStatefulPluginEditorProps | LegacyStatelessPluginEditorProps
     >
 
     return (

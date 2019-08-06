@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import * as React from 'react'
 
 import { HighlightRenderer } from './renderer'
@@ -52,7 +52,7 @@ const HelpIcon: React.FunctionComponent = () => (
 )
 
 export const HighlightEditor = (
-  props: StatefulPluginEditorProps<typeof highlightState>
+  props: LegacyStatefulPluginEditorProps<typeof highlightState>
 ) => {
   const { state, focused, editable } = props
 

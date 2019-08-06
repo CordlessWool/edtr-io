@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 
@@ -56,7 +56,7 @@ export class ImageRenderer extends React.Component<ImageRendererProps> {
   }
 }
 
-export type ImageRendererProps = StatefulPluginEditorProps<
+export type ImageRendererProps = LegacyStatefulPluginEditorProps<
   typeof imageState
 > & {
   disableMouseEvents?: boolean

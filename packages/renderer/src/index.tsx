@@ -1,7 +1,7 @@
 import {
   Provider,
   ScopeContext,
-  Plugin,
+  LegacyPlugin,
   actions,
   createStore,
   SubDocument
@@ -42,7 +42,7 @@ export function Renderer<K extends string = string>({
 }
 
 export interface RendererProps<K extends string = string> {
-  plugins: Record<K, Plugin>
+  plugins: Record<K, LegacyPlugin>
   state: {
     plugin: K
     state?: unknown

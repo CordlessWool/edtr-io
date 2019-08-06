@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { Icon, faPlus, faTimes, styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -45,7 +45,7 @@ const AddButtonWrapper = styled.div({
 })
 
 export class EquationsEditor extends React.Component<
-  StatefulPluginEditorProps<typeof equationsState>
+  LegacyStatefulPluginEditorProps<typeof equationsState>
 > {
   private addButton = () => {
     const { state } = this.props

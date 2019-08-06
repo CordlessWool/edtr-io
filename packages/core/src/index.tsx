@@ -15,10 +15,15 @@ export {
 } from './hooks'
 export {
   Plugin,
+  LegacyPlugin,
   StatefulPluginEditorProps,
+  LegacyStatefulPluginEditorProps,
   StatelessPluginEditorProps,
+  LegacyStatelessPluginEditorProps,
   StatefulPlugin,
-  StatelessPlugin
+  LegacyStatefulPlugin,
+  StatelessPlugin,
+  LegacyStatelessPlugin
 } from './plugin'
 import * as StateType from './plugin-state'
 export { StateType }

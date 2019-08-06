@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
 import {
   faFileArchive,
@@ -51,7 +51,7 @@ export const FileRenderer: React.FunctionComponent<{
 }
 
 export function FilesRenderer(
-  props: StatefulPluginEditorProps<typeof fileState>
+  props: LegacyStatefulPluginEditorProps<typeof fileState>
 ) {
   return (
     <React.Fragment>

@@ -1,6 +1,6 @@
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 
-import { isStatefulPlugin } from '../../plugin'
+import { isLegacyStatefulPlugin } from '../../plugin'
 import { StoreDeserializeHelpers } from '../../plugin-state'
 import {
   change,
@@ -86,7 +86,7 @@ export function* handleRecursiveInserts(
     if (!plugin) return
 
     let pluginState: unknown
-    if (isStatefulPlugin(plugin)) {
+    if (isLegacyStatefulPlugin(plugin)) {
       if (doc.state === undefined) {
         pluginState = plugin.state.createInitialState(helpers)
       } else {

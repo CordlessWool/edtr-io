@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -19,7 +19,7 @@ const TableContainer = styled.div({
 })
 
 export function TableRenderer(
-  props: StatefulPluginEditorProps<typeof tableState> & { placeholder?: string }
+  props: LegacyStatefulPluginEditorProps<typeof tableState> & { placeholder?: string }
 ) {
   const { state, placeholder } = props
 

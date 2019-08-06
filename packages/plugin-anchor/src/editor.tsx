@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { Icon, faLink, EditorInput, styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
@@ -7,7 +7,7 @@ import { anchorState } from '.'
 
 const StyledIcon = styled(Icon)({ marginRight: '5px' })
 export const AnchorEditor = (
-  props: StatefulPluginEditorProps<typeof anchorState>
+  props: LegacyStatefulPluginEditorProps<typeof anchorState>
 ) => {
   const { editable, focused, state } = props
   return (

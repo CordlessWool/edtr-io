@@ -1,6 +1,6 @@
 import {
-  StatefulPlugin,
-  StatefulPluginEditorProps,
+  LegacyStatefulPlugin,
+  LegacyStatefulPluginEditorProps,
   StateType
 } from '@edtr-io/core'
 import { createPluginTheme, PluginThemeFactory } from '@edtr-io/ui'
@@ -12,7 +12,7 @@ import { RowsRenderer } from './renderer'
 export const rowState = StateType.child()
 export const rowsState = StateType.list(rowState, 1)
 
-const RowsPlugin = (props: StatefulPluginEditorProps<typeof rowsState>) => {
+const RowsPlugin = (props: LegacyStatefulPluginEditorProps<typeof rowsState>) => {
   return props.editable ? (
     <RowsEditor {...props} />
   ) : (
@@ -20,7 +20,7 @@ const RowsPlugin = (props: StatefulPluginEditorProps<typeof rowsState>) => {
   )
 }
 
-export const rowsPlugin: StatefulPlugin<typeof rowsState> = {
+export const rowsPlugin: LegacyStatefulPlugin<typeof rowsState> = {
   Component: RowsPlugin,
   state: rowsState,
   getFocusableChildren(state) {

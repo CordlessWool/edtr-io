@@ -1,9 +1,9 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 import { ImportantStatementRenderer } from './renderer'
 
 export const importantStatementState = StateType.child()
 
-export const importantStatementPlugin: StatefulPlugin<
+export const importantStatementPlugin: LegacyStatefulPlugin<
   typeof importantStatementState
 > = {
   Component: ImportantStatementRenderer,

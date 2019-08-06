@@ -1,4 +1,4 @@
-import { StateType, StatefulPlugin } from '@edtr-io/core'
+import { StateType, LegacyStatefulPlugin } from '@edtr-io/core'
 
 import { ScMcExerciseEditor } from './editor'
 import { createIcon, faDotCircle } from '@edtr-io/editor-ui'
@@ -15,7 +15,7 @@ export const scMcExerciseState = StateType.object({
   answers: StateType.list(AnswerProps)
 })
 
-export const scMcExercisePlugin: StatefulPlugin<typeof scMcExerciseState> = {
+export const scMcExercisePlugin: LegacyStatefulPlugin<typeof scMcExerciseState> = {
   Component: ScMcExerciseEditor,
   state: scMcExerciseState,
   icon: createIcon(faDotCircle),

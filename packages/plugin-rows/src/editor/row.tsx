@@ -1,5 +1,5 @@
 import {
-  StatefulPluginEditorProps,
+  LegacyStatefulPluginEditorProps,
   selectors,
   EditorStore,
   connectStateOnly
@@ -26,7 +26,7 @@ const PrimarySettingsWrapper: React.FunctionComponent = props => {
   }, [])
   return <PrimarySettings {...props} />
 }
-export type RowExposedProps = StatefulPluginEditorProps<typeof rowsState> & {
+export type RowExposedProps = LegacyStatefulPluginEditorProps<typeof rowsState> & {
   moveRow: (from: number, to: number) => void
   insert: (index: number, options?: { plugin: string; state?: unknown }) => void
   index: number

@@ -8,58 +8,126 @@ import {
 } from './plugin-state'
 
 export type Plugin<
-  S extends StateDescriptor = StateDescriptor,
+  State extends StateDescriptor = StateDescriptor,
+  Config = undefined
+> = StatelessPlugin<Config> | StatefulPlugin<State, Config>
+
+export interface StatelessPlugin<Config = undefined> {
+  Component: React.ComponentType<StatelessPluginEditorProps<Config>>
+  onPaste?: (data: DataTransfer) => void | { state?: undefined }
+}
+
+export interface StatefulPlugin<
+  State extends StateDescriptor,
+  Config = undefined
+> {
+  Component: React.ComponentType<StatefulPluginEditorProps<State, Config>>
+  state: State
+  onPaste?: (
+    data: DataTransfer
+  ) => void | { state?: StateDescriptorSerializedType<State> }
+  isEmpty?: (state: StateDescriptorValueType<State>) => boolean
+  onKeyDown?: (e: KeyboardEvent) => boolean
+  getFocusableChildren?: (
+    state: StateDescriptorReturnType<State>
+  ) => { id: string }[]
+}
+
+export interface StatelessPluginEditorProps<Config = undefined> {
+  name: string
+  config: Config
+  editable?: boolean
+  focused?: boolean
+}
+
+export interface StatefulPluginEditorProps<
+  State extends StateDescriptor = StateDescriptor,
+  Config = undefined
+> extends StatelessPluginEditorProps<Config> {
+  state: StateDescriptorReturnType<State>
+}
+
+export function isStatefulPlugin<
+  State extends StateDescriptor,
+  Config = unknown
+>(plugin: Plugin<State, Config>): plugin is StatefulPlugin<State, Config> {
+  return (plugin as StatefulPlugin<State, Config>).state !== undefined
+}
+
+export function isStatelessPlugin<Config = unknown>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugin: Plugin<any, Config>
+): plugin is StatelessPlugin<Config> {
+  return !isStatefulPlugin(plugin)
+}
+
+/** @deprecated */
+export type LegacyPlugin<
+  State extends StateDescriptor = StateDescriptor,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Props extends Record<string, unknown> = any
-> = StatelessPlugin<Props> | StatefulPlugin<S, Props>
+> = LegacyStatelessPlugin<Props> | LegacyStatefulPlugin<State, Props>
 
-export interface StatelessPlugin<Props extends Record<string, unknown> = {}> {
-  Component: React.ComponentType<StatelessPluginEditorProps<Props>>
+/** @deprecated */
+export interface LegacyStatelessPlugin<
+  Props extends Record<string, unknown> = {}
+> {
+  Component: React.ComponentType<LegacyStatelessPluginEditorProps<Props>>
   onPaste?: (data: DataTransfer) => void | { state?: undefined }
   title?: string
   icon?: React.ComponentType
   description?: string
 }
 
-export type StatelessPluginEditorProps<Props = {}> = {
+/** @deprecated */
+export type LegacyStatelessPluginEditorProps<Props = {}> = {
   name: string
   editable?: boolean
   focused?: boolean
 } & Props
 
-export interface StatefulPlugin<S extends StateDescriptor, Props = {}> {
-  Component: React.ComponentType<StatefulPluginEditorProps<S, Props>>
-  state: S
+/** @deprecated */
+export interface LegacyStatefulPlugin<
+  State extends StateDescriptor,
+  Props = {}
+> {
+  Component: React.ComponentType<LegacyStatefulPluginEditorProps<State, Props>>
+  state: State
   onPaste?: (
     data: DataTransfer
-  ) => void | { state?: StateDescriptorSerializedType<S> }
+  ) => void | { state?: StateDescriptorSerializedType<State> }
   title?: string
   icon?: React.ComponentType
   description?: string
-  isEmpty?: (state: StateDescriptorValueType<S>) => boolean
+  isEmpty?: (state: StateDescriptorValueType<State>) => boolean
   onKeyDown?: (e: KeyboardEvent) => boolean
   getFocusableChildren?: (
-    state: StateDescriptorReturnType<S>
+    state: StateDescriptorReturnType<State>
   ) => { id: string }[]
 }
 
-export type StatefulPluginEditorProps<
-  S extends StateDescriptor = StateDescriptor,
+/** @deprecated */
+export type LegacyStatefulPluginEditorProps<
+  State extends StateDescriptor = StateDescriptor,
   Props = {}
-> = StatelessPluginEditorProps<Props> & {
-  state: StateDescriptorReturnType<S>
+> = LegacyStatelessPluginEditorProps<Props> & {
+  state: StateDescriptorReturnType<State>
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export function isStatefulPlugin<S extends StateDescriptor>(
-  plugin: Plugin<S>
-): plugin is StatefulPlugin<S, any> {
-  return typeof (plugin as StatefulPlugin<S, any>).state !== 'undefined'
+/** @deprecated */
+export function isLegacyStatefulPlugin<State extends StateDescriptor>(
+  plugin: LegacyPlugin<State>
+): plugin is LegacyStatefulPlugin<State, any> {
+  return (
+    typeof (plugin as LegacyStatefulPlugin<State, any>).state !== 'undefined'
+  )
 }
 
-export function isStatelessPlugin(
-  plugin: Plugin
-): plugin is StatelessPlugin<any> {
-  return !isStatefulPlugin(plugin)
+/** @deprecated */
+export function isLegacyStatelessPlugin(
+  plugin: LegacyPlugin
+): plugin is LegacyStatelessPlugin<any> {
+  return !isLegacyStatefulPlugin(plugin)
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

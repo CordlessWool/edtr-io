@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 
 import { SpoilerEditor } from './editor'
 import { createIcon, faCaretSquareDown } from '@edtr-io/editor-ui'
@@ -8,7 +8,7 @@ export const spoilerState = StateType.object({
   content: StateType.child('rows')
 })
 
-export const spoilerPlugin: StatefulPlugin<typeof spoilerState> = {
+export const spoilerPlugin: LegacyStatefulPlugin<typeof spoilerState> = {
   Component: SpoilerEditor,
   state: spoilerState,
   icon: createIcon(faCaretSquareDown),

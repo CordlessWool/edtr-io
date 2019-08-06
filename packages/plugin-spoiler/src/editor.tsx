@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { ThemeProvider, usePluginTheme } from '@edtr-io/ui'
 import { ExpandableBox } from '@edtr-io/renderer-ui'
 import * as React from 'react'
@@ -11,7 +11,7 @@ export function SpoilerEditor({
   editable,
   focused,
   name
-}: StatefulPluginEditorProps<typeof spoilerState>) {
+}: LegacyStatefulPluginEditorProps<typeof spoilerState>) {
   const theme = usePluginTheme<SpoilerTheme>(name, () => {
     return {
       color: '#f5f5f5'

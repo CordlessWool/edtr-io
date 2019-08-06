@@ -8,7 +8,7 @@ import {
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'remote-redux-devtools'
 
-import { Plugin } from '../plugin'
+import { LegacyPlugin } from '../plugin'
 import { Action } from './actions'
 import { reducer } from './reducer'
 import { saga } from './saga'
@@ -71,7 +71,7 @@ export interface StoreOptions<K extends string> {
   instances: Record<
     string,
     {
-      plugins: Record<K, Plugin>
+      plugins: Record<K, LegacyPlugin>
       defaultPlugin: K
     }
   >

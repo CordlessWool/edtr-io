@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import * as React from 'react'
 
 import { serloInjectionState } from '.'
@@ -22,7 +22,7 @@ const createURL = (id: string) => {
 }
 
 export const SerloInjectionEditor = (
-  props: StatefulPluginEditorProps<typeof serloInjectionState> & {
+  props: LegacyStatefulPluginEditorProps<typeof serloInjectionState> & {
     renderIntoExtendedSettings?: (children: React.ReactNode) => React.ReactNode
   }
 ) => {

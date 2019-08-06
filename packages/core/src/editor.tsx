@@ -12,7 +12,7 @@ import {
   ScopeContext
 } from './editor-context'
 import { OverlayContextProvider } from './overlay'
-import { Plugin } from './plugin'
+import { LegacyPlugin } from './plugin'
 import {
   actions,
   selectors,
@@ -252,7 +252,7 @@ export type EditorDispatchProps = {
 export interface EditorProps<K extends string = string> {
   omitDragDropContext?: boolean
   children?: React.ReactNode | ((document: React.ReactNode) => React.ReactNode)
-  plugins: Record<K, Plugin>
+  plugins: Record<K, LegacyPlugin>
   defaultPlugin: K
   initialState?: {
     plugin: string

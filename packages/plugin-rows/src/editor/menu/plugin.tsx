@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Plugin as EditorPlugin } from '@edtr-io/core'
+import { LegacyPlugin as EditorPlugin } from '@edtr-io/core'
 import { styled, EdtrIcon, edtrRowsControls } from '@edtr-io/editor-ui'
 import { ThemeProps } from '@edtr-io/ui'
 

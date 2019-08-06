@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { EditorInput, PrimarySettings } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
@@ -6,7 +6,7 @@ import { VideoRenderer } from './renderer'
 import { videoState } from '.'
 
 export const VideoEditor = (
-  props: StatefulPluginEditorProps<typeof videoState>
+  props: LegacyStatefulPluginEditorProps<typeof videoState>
 ) => {
   const { editable, focused, state } = props
   return (

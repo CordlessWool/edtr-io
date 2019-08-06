@@ -1,4 +1,4 @@
-import { StatefulPlugin, StateType } from '@edtr-io/core'
+import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
 import { createIcon, faImages } from '@edtr-io/editor-ui'
 
 import { createImageEditor } from './editor'
@@ -13,7 +13,7 @@ export const imageState = StateType.object({
 })
 export const createImagePlugin = (
   config: ImagePluginConfig
-): StatefulPlugin<typeof imageState> => {
+): LegacyStatefulPlugin<typeof imageState> => {
   return {
     Component: createImageEditor(config),
     state: imageState,

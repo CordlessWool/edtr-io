@@ -12,7 +12,7 @@ import { pureInsert, PureInsertAction } from '../documents/actions'
 import { getDocument } from '../documents/reducer'
 import { getPlugin } from '../plugins/reducer'
 import { getRoot } from '../root/reducer'
-import { isStatefulPlugin } from '../../plugin'
+import { isLegacyStatefulPlugin } from '../../plugin'
 
 export const focusReducer = createSubReducer('focus', null, {
   [focus.type](_focusState, action: FocusDocumentAction) {
@@ -63,7 +63,7 @@ export function getFocusTree(
 
   let children
   if (
-    isStatefulPlugin(plugin) &&
+    isLegacyStatefulPlugin(plugin) &&
     typeof plugin.getFocusableChildren === 'function'
   ) {
     const pluginState = plugin.state(document.state, () => {})

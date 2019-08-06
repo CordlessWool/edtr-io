@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { ThemeProvider } from '@edtr-io/ui'
 import { ExpandableBox } from '@edtr-io/renderer-ui'
 import * as React from 'react'
@@ -27,7 +27,7 @@ export function HintEditor({
   state,
   editable,
   focused
-}: StatefulPluginEditorProps<typeof hintState>) {
+}: LegacyStatefulPluginEditorProps<typeof hintState>) {
   const title = (
     <React.Fragment>
       Hinweis

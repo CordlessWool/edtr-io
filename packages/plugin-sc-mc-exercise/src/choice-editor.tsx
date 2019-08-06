@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
 import { Icon, faPlus, faTrashAlt, styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
@@ -6,7 +6,7 @@ import { ScMcExerciseChoiceRenderer } from './choice-renderer'
 import { scMcExerciseState } from '.'
 
 export class ScMcChoiceEditor extends React.Component<
-  StatefulPluginEditorProps<typeof scMcExerciseState> & { index: number }
+  LegacyStatefulPluginEditorProps<typeof scMcExerciseState> & { index: number }
 > {
   public render() {
     const { editable, state, index } = this.props

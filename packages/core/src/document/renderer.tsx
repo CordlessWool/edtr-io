@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { connectStateOnly } from '../editor-context'
-import { isStatefulPlugin } from '../plugin'
+import { isLegacyStatefulPlugin } from '../plugin'
 import { selectors } from '../store'
 import { DocumentProps } from '.'
 
@@ -28,7 +28,7 @@ export const DocumentRenderer = connectStateOnly<
   }
 
   let pluginState: unknown
-  if (isStatefulPlugin(plugin)) {
+  if (isLegacyStatefulPlugin(plugin)) {
     pluginState = plugin.state(document.state, () => {})
   }
   return <plugin.Component {...pluginProps} state={pluginState} />

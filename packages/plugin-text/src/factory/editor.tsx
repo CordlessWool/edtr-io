@@ -1,6 +1,6 @@
 import {
-  StatefulPluginEditorProps,
-  Plugin,
+  LegacyStatefulPluginEditorProps,
+  LegacyPlugin,
   OverlayContext,
   useEditorFocus,
   selectors,
@@ -527,7 +527,7 @@ function createDocumentFromBlocks(blocks: Block[]) {
   }
 }
 
-export type SlateEditorProps = StatefulPluginEditorProps<
+export type SlateEditorProps = LegacyStatefulPluginEditorProps<
   typeof textState,
   SlateEditorAdditionalProps
 >
@@ -545,7 +545,7 @@ export interface SlateEditorAdditionalProps {
 interface SlateClosure extends SlateEditorAdditionalProps {
   focusPrevious: () => void
   focusNext: () => void
-  plugins: Record<string, Plugin>
+  plugins: Record<string, LegacyPlugin>
 }
 
 // TEMPORARY

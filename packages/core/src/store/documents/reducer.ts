@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 
-import { isStatefulPlugin, isStatelessPlugin } from '../../plugin'
+import { isLegacyStatefulPlugin, isLegacyStatelessPlugin } from '../../plugin'
 import { createSubReducer } from '../helpers'
 import { DocumentState, ScopeState } from '../types'
 import {
@@ -28,7 +28,7 @@ export const documentsReducer = createSubReducer(
         ...documentState,
         [id]: {
           plugin: type,
-          state: isStatefulPlugin(plugin) ? pluginState : undefined
+          state: isLegacyStatefulPlugin(plugin) ? pluginState : undefined
         }
       }
     },
@@ -75,7 +75,7 @@ export function serializeDocument(
   }
   return {
     plugin: doc.plugin,
-    ...(isStatelessPlugin(plugin)
+    ...(isLegacyStatelessPlugin(plugin)
       ? {}
       : { state: plugin.state.serialize(doc.state, serializeHelpers) })
   }
@@ -85,7 +85,7 @@ export function isEmpty(state: ScopeState, id: string) {
   const doc = getDocument(state, id)
   if (!doc) return false
   const plugin = getPlugin(state, doc.plugin)
-  if (!plugin || isStatelessPlugin(plugin)) return false
+  if (!plugin || isLegacyStatelessPlugin(plugin)) return false
 
   if (typeof plugin.isEmpty === 'function') {
     return plugin.isEmpty(doc.state)

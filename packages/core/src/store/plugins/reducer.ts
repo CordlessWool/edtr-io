@@ -1,4 +1,4 @@
-import { Plugin } from '../../plugin'
+import { LegacyPlugin } from '../../plugin'
 import { createSubReducer } from '../helpers'
 import { ScopeState } from '../types'
 
@@ -16,7 +16,7 @@ export function getPlugins(state: ScopeState) {
   return state.plugins.plugins
 }
 
-export function getPlugin(state: ScopeState, type: string): Plugin | null {
+export function getPlugin(state: ScopeState, type: string): LegacyPlugin | null {
   const plugins = getPlugins(state)
   return plugins[type] || null
 }
@@ -31,7 +31,7 @@ export function getPluginTypeOrDefault(
 export function getPluginOrDefault(
   state: ScopeState,
   type = getDefaultPlugin(state)
-): Plugin | null {
+): LegacyPlugin | null {
   return getPlugin(state, type)
 }
 

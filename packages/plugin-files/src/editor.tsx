@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
 import {
   EditorButton,
   Icon,
@@ -35,7 +35,7 @@ export const Center = styled.div({
 
 export function createFilesEditor(
   uploadHandler: StateType.UploadHandler<UploadedFile>
-): React.FunctionComponent<StatefulPluginEditorProps<typeof fileState>> {
+): React.FunctionComponent<LegacyStatefulPluginEditorProps<typeof fileState>> {
   return function FilesEditor(props) {
     const { focused, state } = props
 
