@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { Feedback, styled } from '@edtr-io/renderer-ui'
 import * as R from 'ramda'
 import * as React from 'react'
@@ -22,7 +22,7 @@ const types = [
 ]
 
 export class InputExerciseEditor extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof inputExerciseState>
+  StatefulPluginProps<typeof inputExerciseState>
 > {
   private translateDataType(type: string) {
     for (let i = 0; i < types.length; i++) {

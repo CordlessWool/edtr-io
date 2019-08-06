@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { Feedback } from '@edtr-io/renderer-ui'
 import A from 'algebra.js'
 import * as React from 'react'
@@ -7,7 +7,7 @@ import S from 'string'
 import { inputExerciseState } from '.'
 
 export class InputExerciseRenderer extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof inputExerciseState>,
+  StatefulPluginProps<typeof inputExerciseState>,
   InputExerciseRendererState
 > {
   public state = {
