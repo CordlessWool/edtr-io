@@ -1,37 +1,34 @@
 import { selectors } from '@edtr-io/core'
 import { styled, EdtrIcon, edtrRowsControls } from '@edtr-io/editor-ui'
-import { ThemeProps } from '@edtr-io/ui'
 import * as React from 'react'
 import { Portal } from 'react-portal'
 
-import { createRowPluginTheme } from '../..'
+import { RowsConfig } from '../..'
 import { Search } from './search'
 import { Plugin } from './plugin'
 import { Dropzone } from './dropzone'
 
-const Wrapper = styled.div<{ name: string }>(
-  ({ name, ...props }: ThemeProps & { name: string }) => {
-    const theme = createRowPluginTheme(name, props.theme)
-    return {
-      display: 'flex',
-      padding: '25px calc((100vw - 960px) / 2) 0',
-      flexDirection: 'column',
-      backgroundColor: theme.menu.primary.backgroundColor,
-      alignItems: 'center',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      zIndex: 9999,
-      paddingTop: '125px',
+const Wrapper = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
+  return {
+    display: 'flex',
+    padding: '25px calc((100vw - 960px) / 2) 0',
+    flexDirection: 'column',
+    backgroundColor: theme.menu.primary.backgroundColor,
+    alignItems: 'center',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    zIndex: 9999,
+    paddingTop: '125px',
 
-      '@media (max-width: 1000px)': {
-        padding: '25px 20px 0'
-      }
+    '@media (max-width: 1000px)': {
+      padding: '25px 20px 0'
     }
   }
-)
+})
 
 const CloseButtonContainer = styled.div({
   position: 'absolute',
@@ -59,10 +56,10 @@ interface MenuProps {
     | undefined
   setMenu: (newMenu: MenuProps['menu']) => void
   plugins: ReturnType<typeof selectors['getPlugins']>
-  name: string
+  config: RowsConfig
 }
 
-export const Menu = ({ visible, menu, setMenu, plugins, name }: MenuProps) => {
+export const Menu = ({ visible, menu, setMenu, plugins, config }: MenuProps) => {
   const [search, setSearch] = React.useState('')
 
   const close = React.useCallback(
@@ -106,14 +103,14 @@ export const Menu = ({ visible, menu, setMenu, plugins, name }: MenuProps) => {
         key={pluginName}
         pluginName={pluginName}
         plugin={plugins[pluginName]}
-        name={name}
+        config={config}
       />
     ))
   return (
     <Portal>
-      <Wrapper name={name}>
-        <Dropzone name={name} />
-        <Search search={search} name={name} setSearch={setSearch} />
+      <Wrapper config={config}>
+        <Dropzone config={config} />
+        <Search search={search} config={config} setSearch={setSearch} />
         <PluginList>{mappedPlugins}</PluginList>
         <CloseButtonContainer onClick={() => setMenu(undefined)}>
           <EdtrIcon icon={edtrRowsControls.close} />

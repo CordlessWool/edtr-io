@@ -1,16 +1,16 @@
 import {
-  LegacyStatefulPluginEditorProps,
+  StatefulPluginProps,
   selectors,
   useStore,
   ScopeContext
 } from '@edtr-io/core'
 import * as React from 'react'
 
-import { rowsState } from '..'
+import { RowsConfig, rowsState } from '..'
 import { Row } from './row'
 
 export const RowsEditor = (
-  props: LegacyStatefulPluginEditorProps<typeof rowsState>
+  props: StatefulPluginProps<typeof rowsState, RowsConfig>
 ) => {
   const rows = props.state
   const store = useStore()

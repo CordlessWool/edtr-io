@@ -1,19 +1,19 @@
 import { StateType } from '@edtr-io/core'
 import * as React from 'react'
 
-import { rowsState, rowState } from '../..'
+import {RowsConfig, rowsState, rowState} from '../..'
 export { ExtendedSettingsWrapper } from './extended-settings'
 import { Settings } from './settings'
 import { MoveControls } from './move-controls'
 
 export interface SettingsProps {
-  name: string
+  config: RowsConfig
   expanded: boolean
   setShowExtendedSettings: (showExtendedSettings: boolean) => void
 }
 
 export interface MoveControlsProps {
-  name: string
+  config: RowsConfig
   index: number
   rows: StateType.StateDescriptorReturnType<typeof rowsState>
   row: StateType.StateDescriptorReturnType<typeof rowState>
@@ -26,7 +26,7 @@ export const Controls = ({
   index,
   expanded,
   setShowExtendedSettings,
-  name,
+  config,
   rows,
   row,
   connectDragSource
@@ -34,12 +34,12 @@ export const Controls = ({
   return (
     <React.Fragment>
       <Settings
-        name={name}
+        config={config}
         expanded={expanded}
         setShowExtendedSettings={setShowExtendedSettings}
       >
         <MoveControls
-          name={name}
+          config={config}
           index={index}
           rows={rows}
           row={row}

@@ -2,12 +2,12 @@ import { StateType } from '@edtr-io/core'
 import { EdtrIcon, edtrRowsControls, styled } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
-import { createRowPluginTheme, rowsState } from '../..'
+import { RowsConfig, rowsState } from '../..'
 import { Globals } from './globals'
 
-const Overlay = styled.div<{ visible?: boolean; name: string }>(
-  ({ visible, name, ...props }) => {
-    const theme = createRowPluginTheme(name, props.theme)
+const Overlay = styled.div<{ visible?: boolean; config: RowsConfig }>(
+  ({ visible, config }) => {
+    const theme = config.theme
     return {
       width: '100vw',
       height: '100vh',
@@ -23,8 +23,8 @@ const Overlay = styled.div<{ visible?: boolean; name: string }>(
   }
 )
 
-const Content = styled.div<{ name: string }>(({ name, ...props }) => {
-  const theme = createRowPluginTheme(name, props.theme)
+const Content = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
   return {
     backgroundColor: theme.backgroundColor,
     position: 'relative',
@@ -40,8 +40,8 @@ const Header = styled.div({
   justifyContent: 'space-between'
 })
 
-const CloseBtnContainer = styled.div<{ name: string }>(({ name, ...props }) => {
-  const theme = createRowPluginTheme(name, props.theme)
+const CloseBtnContainer = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
   return {
     width: '24px',
     height: '24px',
@@ -53,8 +53,8 @@ const CloseBtnContainer = styled.div<{ name: string }>(({ name, ...props }) => {
   }
 })
 
-const Footer = styled.div<{ name: string }>(({ name, ...props }) => {
-  const theme = createRowPluginTheme(name, props.theme)
+const Footer = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
   return {
     paddingTop: '10px',
     marginTop: '25px',
@@ -65,8 +65,8 @@ const Footer = styled.div<{ name: string }>(({ name, ...props }) => {
   }
 })
 
-const CloseCaption = styled.div<{ name: string }>(({ name, ...props }) => {
-  const theme = createRowPluginTheme(name, props.theme)
+const CloseCaption = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
   return {
     color: theme.menu.highlightColor,
     cursor: 'pointer'
@@ -80,7 +80,7 @@ interface ExtendedSettingsProps {
   rows: StateType.StateDescriptorReturnType<typeof rowsState>
   duplicateRow: () => void
   extendedSettingsVisible: boolean
-  name: string
+  config: RowsConfig
 }
 
 // eslint-disable-next-line react/display-name
@@ -96,7 +96,7 @@ export const ExtendedSettingsWrapper = React.forwardRef<
       rows,
       duplicateRow,
       extendedSettingsVisible,
-      name
+      config
     }: ExtendedSettingsProps,
     ref
   ) => {
@@ -117,24 +117,24 @@ export const ExtendedSettingsWrapper = React.forwardRef<
     if (!expanded) return null
     // render even if not yet visible, because of ref.
     return (
-      <Overlay visible={extendedSettingsVisible} name={name}>
-        <Content name={name}>
+      <Overlay visible={extendedSettingsVisible} config={config}>
+        <Content config={config}>
           <Header>
             <h4 style={{ marginRight: 25 }}>Erweiterte Einstellungen</h4>
-            <CloseBtnContainer onClick={hideExtendedSettings} name={name}>
+            <CloseBtnContainer onClick={hideExtendedSettings} config={config}>
               <EdtrIcon icon={edtrRowsControls.close} />
             </CloseBtnContainer>
           </Header>
           <div ref={ref} />
-          <Footer name={name}>
+          <Footer config={config}>
             <Globals
               close={hideExtendedSettings}
               index={index}
               rows={rows}
               duplicateRow={duplicateRow}
-              name={name}
+              config={config}
             />
-            <CloseCaption onClick={hideExtendedSettings} name={name}>
+            <CloseCaption onClick={hideExtendedSettings} config={config}>
               Schließen
             </CloseCaption>
           </Footer>

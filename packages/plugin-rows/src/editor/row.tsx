@@ -1,15 +1,15 @@
 import {
-  LegacyStatefulPluginEditorProps,
+  StatefulPluginProps,
   selectors,
   EditorStore,
   connectStateOnly
 } from '@edtr-io/core'
 import { PrimarySettings } from '@edtr-io/editor-ui'
-import { ThemeProvider, usePluginTheme } from '@edtr-io/ui'
+import { ThemeProvider } from '@edtr-io/ui'
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 
-import { rowsPluginThemeFactory, rowsState } from '..'
+import { RowsConfig, rowsState } from '..'
 import { RowContainer } from '../row-container'
 import { Controls, ExtendedSettingsWrapper } from './controls'
 import { connectDnD, CollectedProps, TargetProps } from './dnd-hoc'
@@ -26,7 +26,10 @@ const PrimarySettingsWrapper: React.FunctionComponent = props => {
   }, [])
   return <PrimarySettings {...props} />
 }
-export type RowExposedProps = LegacyStatefulPluginEditorProps<typeof rowsState> & {
+export type RowExposedProps = StatefulPluginProps<
+  typeof rowsState,
+  RowsConfig
+> & {
   moveRow: (from: number, to: number) => void
   insert: (index: number, options?: { plugin: string; state?: unknown }) => void
   index: number
@@ -80,7 +83,7 @@ const RowSource = React.forwardRef<
   }
 
   const extendedSettingsNode = React.useRef<HTMLDivElement>(null)
-  const settingsTheme = usePluginTheme(name, rowsPluginThemeFactory)
+  const settingsTheme = props.config.theme
 
   const theme = React.useMemo(() => {
     return {
@@ -118,10 +121,10 @@ const RowSource = React.forwardRef<
   const expanded = (props.focused || focused) && expandedState
   return (
     <RowContainer
+      config={props.config}
       editable={props.editable || false}
       ref={rowRef}
       noHeight={props.doc.plugin === 'notes' && !props.editable}
-      name={props.name}
       isFirst={index === 0}
       expanded={expanded}
       onMouseMove={() => {
@@ -132,7 +135,7 @@ const RowSource = React.forwardRef<
     >
       {index === 0 && (
         <Separator
-          name={props.name}
+          config={props.config}
           isFirst={true}
           onClick={() => openMenu(index)}
         />
@@ -164,17 +167,17 @@ const RowSource = React.forwardRef<
         duplicateRow={() => rows.insert(index, props.doc)}
         ref={extendedSettingsNode}
         extendedSettingsVisible={showExtendedSettings}
-        name={props.name}
+        config={props.config}
       />
       <Separator
-        name={props.name}
+        config={props.config}
         focused={focused}
         onClick={() => openMenu(index + 1)}
       />
       {props.editable && (
         <React.Fragment>
           <Controls
-            name={props.name}
+            config={props.config}
             index={index}
             expanded={expanded}
             setShowExtendedSettings={setShowExtendedSettings}
@@ -187,7 +190,7 @@ const RowSource = React.forwardRef<
             menu={menu}
             setMenu={setMenu}
             plugins={props.plugins}
-            name={props.name}
+            config={props.config}
           />
         </React.Fragment>
       )}

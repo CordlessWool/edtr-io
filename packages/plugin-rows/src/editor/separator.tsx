@@ -1,8 +1,7 @@
 import { styled, EdtrIcon, edtrRowsControls } from '@edtr-io/editor-ui'
-import { ThemeProps } from '@edtr-io/ui'
 import * as React from 'react'
 
-import { createRowPluginTheme } from '..'
+import { RowsConfig } from '..'
 
 const StyledSeparator = styled.div<{ isFirst?: boolean }>(({ isFirst }) => {
   return {
@@ -15,36 +14,33 @@ const StyledSeparator = styled.div<{ isFirst?: boolean }>(({ isFirst }) => {
   }
 })
 
-const AddTrigger = styled.div<{ focused: boolean; name: string }>(
-  ({
-    name,
-    focused,
-    ...props
-  }: ThemeProps & { focused: boolean; name: string }) => {
-    const theme = createRowPluginTheme(name, props.theme)
-    return {
-      width: '26px',
-      height: '26px',
-      borderRadius: '13px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      color: theme.color,
-      backgroundColor: theme.backgroundColor,
-      padding: '5px 0 10px',
-      opacity: focused ? 0.6 : 0,
-      transition: '250ms all ease-in-out 250ms',
-      // position: inline ? 'absolute' : 'relative',
-      zIndex: 70,
+const AddTrigger = styled.div<{
+  focused: boolean
+  config: RowsConfig
+}>(({ focused, config }) => {
+  const theme = config.theme
+  return {
+    width: '26px',
+    height: '26px',
+    borderRadius: '13px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.color,
+    backgroundColor: theme.backgroundColor,
+    padding: '5px 0 10px',
+    opacity: focused ? 0.6 : 0,
+    transition: '250ms all ease-in-out 250ms',
+    // position: inline ? 'absolute' : 'relative',
+    zIndex: 70,
 
-      '&:hover': {
-        color: theme.highlightColor,
-        opacity: 1,
-        cursor: 'pointer'
-      }
+    '&:hover': {
+      color: theme.highlightColor,
+      opacity: 1,
+      cursor: 'pointer'
     }
   }
-)
+})
 
 const TriggerArea = styled.div({
   width: '100%',
@@ -62,14 +58,14 @@ const Icon = styled(EdtrIcon)({
 })
 
 export const Add: React.FunctionComponent<{
-  name: string
+  config: RowsConfig
   focused: boolean
 }> = props => {
   return (
     <AddTrigger
       className="add-trigger"
-      name={props.name}
       focused={props.focused}
+      config={props.config}
     >
       <Icon icon={edtrRowsControls.plus} />
     </AddTrigger>
@@ -77,15 +73,15 @@ export const Add: React.FunctionComponent<{
 }
 
 export const Separator: React.FunctionComponent<{
+  config: RowsConfig,
   isFirst?: boolean
-  name: string
   onClick: () => void
   focused?: boolean
-}> = ({ isFirst, onClick, name, focused }) => {
+}> = ({ isFirst, onClick, config, focused }) => {
   return (
     <StyledSeparator isFirst={isFirst} onClick={onClick}>
       <TriggerArea>
-        <Add name={name} focused={focused || false} />
+        <Add config={config} focused={focused || false} />
       </TriggerArea>
     </StyledSeparator>
   )

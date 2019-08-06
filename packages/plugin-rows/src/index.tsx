@@ -1,9 +1,6 @@
-import {
-  LegacyStatefulPlugin,
-  LegacyStatefulPluginEditorProps,
-  StateType
-} from '@edtr-io/core'
-import { createPluginTheme, PluginThemeFactory } from '@edtr-io/ui'
+import { StatefulPlugin, StatefulPluginProps, StateType } from '@edtr-io/core'
+import { DeepPartial } from '@edtr-io/ui'
+import * as R from 'ramda'
 import * as React from 'react'
 
 import { RowsEditor } from './editor'
@@ -12,7 +9,7 @@ import { RowsRenderer } from './renderer'
 export const rowState = StateType.child()
 export const rowsState = StateType.list(rowState, 1)
 
-const RowsPlugin = (props: LegacyStatefulPluginEditorProps<typeof rowsState>) => {
+const RowsPlugin = (props: StatefulPluginProps<typeof rowsState, RowsConfig>) => {
   return props.editable ? (
     <RowsEditor {...props} />
   ) : (
@@ -20,15 +17,50 @@ const RowsPlugin = (props: LegacyStatefulPluginEditorProps<typeof rowsState>) =>
   )
 }
 
-export const rowsPlugin: LegacyStatefulPlugin<typeof rowsState> = {
-  Component: RowsPlugin,
-  state: rowsState,
-  getFocusableChildren(state) {
-    return state()
+export function createRowsPlugin(
+  config: { theme?: DeepPartial<RowsConfig> } = {}
+): StatefulPlugin<typeof rowsState, RowsConfig> {
+  return {
+    Component: RowsPlugin,
+    config: theme => {
+      return {
+        theme: R.mergeDeepLeft(config.theme, {
+          color: theme.editor.secondary.color, // rgb(51,51,51) #333333
+          backgroundColor: theme.editor.primary.color, // #fff
+          highlightColor: theme.editor.primary.background, // rgb(70, 155, 255) #469bff
+          lightBackgroundColor: 'rgb(182,182,182)',
+          menu: {
+            highlightColor: theme.editor.primary.background, // rgb(70, 155, 255) #469bff
+            primary: {
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              color: theme.editor.backgroundColor // rgb(51,51,51,0.95) #333333??
+            },
+            secondary: {
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              color: '#999999'
+            },
+            dropzone: {
+              backgroundColor: 'rgb(73, 73, 73)',
+              color: '#dbdbdb',
+              highlightColor: theme.editor.primary.background,
+              highlightBackgroundColor: 'rgb(60,60,60)'
+            }
+          }
+        })
+      }
+    },
+    state: rowsState,
+    getFocusableChildren(state) {
+      return state()
+    }
   }
 }
 
-export interface RowTheme {
+export interface RowsConfig {
+  theme: RowsTheme
+}
+
+export interface RowsTheme {
   backgroundColor: string
   color: string
   highlightColor: string
@@ -52,33 +84,3 @@ export interface RowTheme {
     }
   }
 }
-
-export const rowsPluginThemeFactory: PluginThemeFactory<RowTheme> = theme => {
-  return {
-    color: theme.editor.secondary.color, // rgb(51,51,51) #333333
-    backgroundColor: theme.editor.primary.color, // #fff
-    highlightColor: theme.editor.primary.background, // rgb(70, 155, 255) #469bff
-    lightBackgroundColor: 'rgb(182,182,182)',
-    menu: {
-      highlightColor: theme.editor.primary.background, // rgb(70, 155, 255) #469bff
-      primary: {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        color: theme.editor.backgroundColor // rgb(51,51,51,0.95) #333333??
-      },
-      secondary: {
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        color: '#999999'
-      },
-      dropzone: {
-        backgroundColor: 'rgb(73, 73, 73)',
-        color: '#dbdbdb',
-        highlightColor: theme.editor.primary.background,
-        highlightBackgroundColor: 'rgb(60,60,60)'
-      }
-    }
-  }
-}
-
-export const createRowPluginTheme = createPluginTheme<RowTheme>(
-  rowsPluginThemeFactory
-)

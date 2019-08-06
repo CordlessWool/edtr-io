@@ -2,16 +2,16 @@ import { StateType } from '@edtr-io/core'
 import { styled, Icon, faCopy, faTrashAlt } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
-import { createRowPluginTheme, rowsState } from '../..'
+import { RowsConfig, rowsState } from '../..'
 
 const StyledGlobals = styled.div({
   display: 'flex',
   alignItems: 'center'
 })
 
-const IconContainer = styled.div<{ disabled?: boolean; name: string }>(
-  ({ disabled, name, ...props }) => {
-    const theme = createRowPluginTheme(name, props.theme)
+const IconContainer = styled.div<{ disabled?: boolean; config: RowsConfig }>(
+  ({ disabled, config }) => {
+    const theme = config.theme
     return {
       height: '30px',
       margin: '0 5px 0 15px',
@@ -25,10 +25,10 @@ const IconContainer = styled.div<{ disabled?: boolean; name: string }>(
   }
 )
 
-const Copy = ({ duplicateRow, close, name }: GlobalsProps) => {
+const Copy = ({ duplicateRow, close, config }: GlobalsProps) => {
   return (
     <IconContainer
-      name={name}
+      config={config}
       onClick={() => {
         duplicateRow()
         close()
@@ -39,10 +39,10 @@ const Copy = ({ duplicateRow, close, name }: GlobalsProps) => {
   )
 }
 
-const Remove = ({ rows, index, close, name }: GlobalsProps) => {
+const Remove = ({ rows, index, close, config }: GlobalsProps) => {
   return (
     <IconContainer
-      name={name}
+      config={config}
       disabled={rows.items.length === 1}
       onClick={() => {
         if (rows.items.length === 1) return
@@ -56,12 +56,13 @@ const Remove = ({ rows, index, close, name }: GlobalsProps) => {
 }
 
 interface GlobalsProps {
-  name: string
+  config: RowsConfig
   index: number
   rows: StateType.StateDescriptorReturnType<typeof rowsState>
   close: () => void
   duplicateRow: () => void
 }
+
 export const Globals = (props: GlobalsProps) => {
   return (
     <StyledGlobals>

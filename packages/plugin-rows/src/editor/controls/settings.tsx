@@ -2,13 +2,13 @@ import { faCog, Icon, styled } from '@edtr-io/editor-ui'
 import { ThemeProps } from '@edtr-io/ui'
 import * as React from 'react'
 
-import { createRowPluginTheme } from '../..'
+import { RowsConfig } from '../..'
 import { SettingsProps } from '.'
 
 const StyledSettings = styled.div<
-  ThemeProps & { expanded: boolean; name: string }
->(({ expanded, name, ...props }) => {
-  const theme = createRowPluginTheme(name, props.theme)
+  ThemeProps & { expanded: boolean; config: RowsConfig }
+>(({ expanded, config }) => {
+  const theme = config.theme
   return {
     position: 'absolute',
     top: 0,
@@ -31,25 +31,23 @@ const StyledSettings = styled.div<
   }
 })
 
-const StyledIconContainer = styled.div(
-  ({ name, ...props }: ThemeProps & { name: string }) => {
-    const theme = createRowPluginTheme(name, props.theme)
-    return {
-      height: '24px',
-      opacity: 0.8,
-      cursor: 'pointer',
-      color: theme.menu.primary.color,
+const StyledIconContainer = styled.div<{ config: RowsConfig }>(({ config }) => {
+  const theme = config.theme
+  return {
+    height: '24px',
+    opacity: 0.8,
+    cursor: 'pointer',
+    color: theme.menu.primary.color,
 
-      '&:hover': {
-        color: theme.menu.highlightColor
-      }
+    '&:hover': {
+      color: theme.menu.highlightColor
     }
   }
-)
+})
 
-const Content = styled.div<ThemeProps & { expanded: boolean; name: string }>(
-  ({ expanded, name, ...props }) => {
-    const theme = createRowPluginTheme(name, props.theme)
+const Content = styled.div<{ expanded?: boolean; config: RowsConfig }>(
+  ({ expanded, config }) => {
+    const theme = config.theme
     return {
       backgroundColor: theme.backgroundColor,
       paddingBottom: '10px',
@@ -65,25 +63,32 @@ const Content = styled.div<ThemeProps & { expanded: boolean; name: string }>(
   }
 )
 
-const SettingsIcon = (props: { open: () => void; name: string }) => (
+const SettingsIcon = (props: { open: () => void; config: RowsConfig }) => (
   <span onClick={props.open}>
-    <StyledIconContainer name={props.name}>
+    <StyledIconContainer config={props.config}>
       <Icon icon={faCog} size="lg" />
     </StyledIconContainer>
   </span>
 )
 
 export const Settings: React.FunctionComponent<SettingsProps> = ({
-  name,
+  config,
   children,
   expanded,
   setShowExtendedSettings
 }) => {
   return (
-    <StyledSettings expanded={expanded} name={name} className="row-controls">
-      <Content expanded={expanded} name={name}>
+    <StyledSettings
+      expanded={expanded}
+      config={config}
+      className="row-controls"
+    >
+      <Content expanded={expanded} config={config}>
         {children}
-        <SettingsIcon open={() => setShowExtendedSettings(true)} name={name} />
+        <SettingsIcon
+          open={() => setShowExtendedSettings(true)}
+          config={config}
+        />
       </Content>
     </StyledSettings>
   )

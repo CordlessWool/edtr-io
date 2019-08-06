@@ -1,3 +1,4 @@
+import { Theme } from '@edtr-io/ui'
 import * as React from 'react'
 
 import {
@@ -14,7 +15,7 @@ export type Plugin<
 
 export interface StatelessPlugin<Config extends {} = {}> {
   Component: React.ComponentType<StatelessPluginProps<Config>>
-  config: Config
+  config: Config | ((theme: Theme) => Config)
   onPaste?: (data: DataTransfer) => void | { state?: undefined }
 }
 
@@ -23,7 +24,7 @@ export interface StatefulPlugin<
   Config extends {} = {}
 > {
   Component: React.ComponentType<StatefulPluginProps<State, Config>>
-  config: Config
+  config: Config | ((theme: Theme) => Config)
   state: State
   onPaste?: (
     data: DataTransfer
@@ -71,9 +72,7 @@ export type LegacyPlugin<
 > = LegacyStatelessPlugin<Props> | LegacyStatefulPlugin<State, Props>
 
 /** @deprecated */
-export interface LegacyStatelessPlugin<
-  Props extends {} = {}
-> {
+export interface LegacyStatelessPlugin<Props extends {} = {}> {
   Component: React.ComponentType<LegacyStatelessPluginEditorProps<Props>>
   onPaste?: (data: DataTransfer) => void | { state?: undefined }
   title?: string

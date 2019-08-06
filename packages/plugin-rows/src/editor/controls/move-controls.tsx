@@ -2,16 +2,16 @@ import { EdtrIcon, edtrRowsControls, styled } from '@edtr-io/editor-ui'
 import { StateType } from '@edtr-io/core'
 import * as React from 'react'
 
-import { createRowPluginTheme, rowsState, rowState } from '../..'
+import {RowsConfig, rowsState, rowState} from '../..'
 import { MoveControlsProps } from '.'
 
 const StyledControls = styled.div({
   display: 'flex'
 })
 
-const IconContainer = styled.div<{ disabled?: boolean; name: string }>(
-  ({ disabled, name, ...props }) => {
-    const theme = createRowPluginTheme(name, props.theme)
+const IconContainer = styled.div<{ disabled?: boolean; config: RowsConfig }>(
+  ({ disabled, config }) => {
+    const theme = config.theme
     return {
       height: '24px',
       marginBottom: '15px',
@@ -37,11 +37,11 @@ const DragIcon = styled(IconContainer)({
 
 const Drag: React.FunctionComponent<
   IconProps & { connectDragSource: Function }
-> = ({ rows, connectDragSource, name }) => {
+> = ({ rows, connectDragSource, config }) => {
   return connectDragSource(
     <div>
       <DragIcon
-        name={name}
+        config={config}
         draggable={false}
         disabled={rows.items.length === 1}
       >
@@ -52,7 +52,7 @@ const Drag: React.FunctionComponent<
 }
 
 interface IconProps {
-  name: string
+  config: RowsConfig
   index: number
   rows: StateType.StateDescriptorReturnType<typeof rowsState>
   row: StateType.StateDescriptorReturnType<typeof rowState>
@@ -62,7 +62,7 @@ export const MoveControls = ({
   index,
   rows,
   row,
-  name,
+  config,
   connectDragSource
 }: MoveControlsProps) => {
   return (
@@ -72,7 +72,7 @@ export const MoveControls = ({
         index={index}
         row={row}
         connectDragSource={connectDragSource}
-        name={name}
+        config={config}
       />
     </StyledControls>
   )
