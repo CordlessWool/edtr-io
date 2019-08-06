@@ -1,16 +1,18 @@
-import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
+import { StatefulPlugin, StateType } from '@edtr-io/core'
+
 import { ImportantStatementRenderer } from './renderer'
 
 export const importantStatementState = StateType.child()
 
-export const importantStatementPlugin: LegacyStatefulPlugin<
+export function createImportantStatementPlugin(): StatefulPlugin<
   typeof importantStatementState
-> = {
-  Component: ImportantStatementRenderer,
-  state: importantStatementState,
-  title: 'Merksatz',
-  description: 'Hebe eine wichtige Information durch einen Merksatz hervor',
-  getFocusableChildren(state) {
-    return [state]
+> {
+  return {
+    Component: ImportantStatementRenderer,
+    config: {},
+    state: importantStatementState,
+    getFocusableChildren(state) {
+      return [state]
+    }
   }
 }
