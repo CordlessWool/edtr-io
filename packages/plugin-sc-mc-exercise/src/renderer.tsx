@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 
@@ -13,7 +13,7 @@ enum Mode {
 }
 
 export class ScMcExerciseRenderer extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof scMcExerciseState>,
+  StatefulPluginProps<typeof scMcExerciseState>,
   ScMcExerciseRendererState
 > {
   public state = { mode: Mode.test }

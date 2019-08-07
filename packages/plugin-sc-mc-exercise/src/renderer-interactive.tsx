@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps, StateType } from '@edtr-io/core'
+import { StatefulPluginProps, StateType } from '@edtr-io/core'
 import { Feedback, styled } from '@edtr-io/renderer-ui'
 import * as R from 'ramda'
 import * as React from 'react'
@@ -181,7 +181,7 @@ export class ScMcRendererInteractive extends React.Component<
   private SubmitButton = styled.button({ float: 'right', margin: '10px 0px' })
 }
 
-export type ScMcRendererInteractiveProps = LegacyStatefulPluginEditorProps<
+export type ScMcRendererInteractiveProps = StatefulPluginProps<
   typeof scMcExerciseState
 > & {
   getFeedback?: (params: {

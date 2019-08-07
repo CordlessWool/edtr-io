@@ -1,11 +1,11 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { styled } from '@edtr-io/ui'
-
 import * as React from 'react'
+
 import { scMcExerciseState } from '.'
 
 export class ScMcExerciseChoiceRenderer extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof scMcExerciseState> & ChoiceRendererProps
+  StatefulPluginProps<typeof scMcExerciseState> & ChoiceRendererProps
 > {
   public render() {
     const {

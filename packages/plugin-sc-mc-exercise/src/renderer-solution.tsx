@@ -1,4 +1,4 @@
-import { StateType, LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StateType, StatefulPluginProps } from '@edtr-io/core'
 import * as React from 'react'
 
 import { ScMcAnswersRenderer } from './answers-renderer'
@@ -6,7 +6,7 @@ import { ScMcExerciseChoiceRenderer } from './choice-renderer'
 import { AnswerProps, scMcExerciseState } from '.'
 
 export class ScMcRendererSolution extends React.Component<
-  LegacyStatefulPluginEditorProps<typeof scMcExerciseState>
+  StatefulPluginProps<typeof scMcExerciseState>
 > {
   public render() {
     return <ScMcAnswersRenderer {...this.props} showAnswer={this.showAnswer} />
