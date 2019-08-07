@@ -1,25 +1,17 @@
-import { LegacyStatefulPlugin, StateType } from '@edtr-io/core'
-
-import { SpoilerEditor } from './editor'
-import { createIcon, faCaretSquareDown } from '@edtr-io/editor-ui'
+import { StateType } from '@edtr-io/core'
+import { createExpandableBoxPlugin } from '@edtr-io/plugin-expandable-box'
 
 export const spoilerState = StateType.object({
   title: StateType.string(''),
   content: StateType.child('rows')
 })
 
-export const spoilerPlugin: LegacyStatefulPlugin<typeof spoilerState> = {
-  Component: SpoilerEditor,
-  state: spoilerState,
-  icon: createIcon(faCaretSquareDown),
-  title: 'Spoiler',
-  description:
-    'In diese ausklappbaren Box kannst du zum Beispiel Exkurse hinzufügen.',
-  getFocusableChildren(state) {
-    return [state().content]
-  }
-}
-
-export interface SpoilerTheme {
-  color: string
+export function createSpoilerPlugin() {
+  return createExpandableBoxPlugin({
+    theme: {
+      toggleBackgroundColor: '#f5f5f5',
+      toggleColor: '#333333',
+      containerBorderColor: '#f5f5f5'
+    }
+  })
 }
