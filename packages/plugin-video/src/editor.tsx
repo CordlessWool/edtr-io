@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import { EditorInput, PrimarySettings } from '@edtr-io/editor-ui'
 import * as React from 'react'
 
@@ -6,9 +6,12 @@ import { VideoRenderer } from './renderer'
 import { videoState } from '.'
 
 export const VideoEditor = (
-  props: LegacyStatefulPluginEditorProps<typeof videoState>
+  props: StatefulPluginProps<typeof videoState>
 ) => {
   const { editable, focused, state } = props
+
+  if (!editable) return <VideoRenderer {...props} />
+
   return (
     <React.Fragment>
       <VideoRenderer {...props} disableCursorEvents={editable} />

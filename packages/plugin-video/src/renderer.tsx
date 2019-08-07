@@ -1,4 +1,4 @@
-import { LegacyStatefulPluginEditorProps } from '@edtr-io/core'
+import { StatefulPluginProps } from '@edtr-io/core'
 import * as React from 'react'
 
 import { videoState } from '.'
@@ -48,7 +48,7 @@ const VideoIframe = styled.iframe({
   border: 'none'
 })
 
-export type VideoRendererProps = LegacyStatefulPluginEditorProps<
+export type VideoRendererProps = StatefulPluginProps<
   typeof videoState
 > & {
   disableCursorEvents?: boolean
