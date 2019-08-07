@@ -1,7 +1,6 @@
 import { StateType } from '@edtr-io/core'
 import { createExpandableBoxPlugin } from '@edtr-io/plugin-expandable-box'
 
-
 export const hintState = StateType.object({
   title: StateType.string(''),
   content: StateType.child('rows')
