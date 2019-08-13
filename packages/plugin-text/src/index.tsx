@@ -7,10 +7,11 @@ import {
   RenderMarkProps,
   RenderNodeProps
 } from 'slate-react'
+
+import { createUiPlugin, Controls } from './controls'
 import { plugins } from './plugins'
 import { createTextPlugin } from './factory'
-import { createUiPlugin, Controls } from './controls'
-import { createPluginTheme, PluginThemeFactory } from '@edtr-io/ui'
+import {DeepPartial} from '@edtr-io/ui'
 
 export type MarkEditorProps = RenderMarkProps
 
@@ -42,6 +43,10 @@ export const textPlugin = createTextPlugin({
   )
 })
 
+export interface TextConfig {
+  theme?: DeepPartial<TextTheme>
+}
+
 export interface TextTheme {
   backgroundColor: string
   color: string
@@ -60,33 +65,6 @@ export interface TextTheme {
     }
   }
 }
-
-export const textPluginThemeFactory: PluginThemeFactory<TextTheme> = theme => {
-  const blue = '#1794c1',
-    green = '#469a40',
-    orange = '#ff6703'
-  return {
-    backgroundColor: 'transparent',
-    color: theme.editor.color,
-    hoverColor: theme.editor.primary.background,
-    active: {
-      backgroundColor: '#b6b6b6',
-      color: theme.editor.backgroundColor
-    },
-    dropDown: {
-      backgroundColor: theme.editor.backgroundColor
-    },
-    plugins: {
-      colors: {
-        colors: [blue, green, orange],
-        defaultColor: 'black'
-      }
-    }
-  }
-}
-export const createTextPluginTheme = createPluginTheme<TextTheme>(
-  textPluginThemeFactory
-)
 
 export function trimSelection(editor: Editor) {
   // Trimm selection before applying transformation

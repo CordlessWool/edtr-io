@@ -30,6 +30,7 @@
       "@edtr-io/plugin-spoiler": ["plugin-spoiler/src"],
       "@edtr-io/plugin-table": ["plugin-table/src"],
       "@edtr-io/plugin-text": ["plugin-text/src"],
+      "@edtr-io/plugin-text-plugin": ["plugin-text-plugin/src"],
       "@edtr-io/plugin-video": ["plugin-video/src"]
     }
   }

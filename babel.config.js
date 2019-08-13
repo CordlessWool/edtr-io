@@ -24,7 +24,8 @@ module.exports = function(api) {
                   '@edtr-io/plugin-blockquote':
                     '@edtr-io/plugin-blockquote/src',
                   '@edtr-io/plugin-equations': '@edtr-io/plugin-equations/src',
-                  '@edtr-io/plugin-expandable-box': '@edtr-io/plugin-expandable-box/src',
+                  '@edtr-io/plugin-expandable-box':
+                    '@edtr-io/plugin-expandable-box/src',
                   '@edtr-io/plugin-files': '@edtr-io/plugin-files/src',
                   '@edtr-io/plugin-geogebra': '@edtr-io/plugin-geogebra/src',
                   '@edtr-io/plugin-h5p': '@edtr-io/plugin-h5p/src',
@@ -44,6 +45,8 @@ module.exports = function(api) {
                   '@edtr-io/plugin-spoiler': '@edtr-io/plugin-spoiler/src',
                   '@edtr-io/plugin-table': '@edtr-io/plugin-table/src',
                   '@edtr-io/plugin-text': '@edtr-io/plugin-text/src',
+                  '@edtr-io/plugin-text-plugin':
+                    '@edtr-io/plugin-text-plugin/src',
                   '@edtr-io/plugin-video': '@edtr-io/plugin-video/src'
                 },
                 loglevel: 'silent'

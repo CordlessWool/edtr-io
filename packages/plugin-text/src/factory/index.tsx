@@ -34,6 +34,31 @@ export const createTextPlugin = (
 ): LegacyStatefulPlugin<typeof textState, SlateEditorAdditionalProps> => {
   return {
     Component: createTextEditor(options),
+    config: theme => {
+      const blue = '#1794c1',
+          green = '#469a40',
+          orange = '#ff6703'
+      return {
+        theme: R.mergeDeepLeft(config.theme, {
+          backgroundColor: 'transparent',
+          color: theme.editor.color,
+          hoverColor: theme.editor.primary.background,
+          active: {
+            backgroundColor: '#b6b6b6',
+            color: theme.editor.backgroundColor
+          },
+          dropDown: {
+            backgroundColor: theme.editor.backgroundColor
+          },
+          plugins: {
+            colors: {
+              colors: [blue, green, orange],
+              defaultColor: 'black'
+            }
+          }
+        })
+      }
+    },
     state: textState,
     icon: createIcon(faParagraph),
     title: 'Text',
