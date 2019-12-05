@@ -3,7 +3,7 @@ import {
   EditorInput,
   PrimarySettings
 } from '@edtr-io/editor-ui'
-import { StatefulPluginEditorProps } from '@edtr-io/plugin'
+import { PluginEditorProps } from '@edtr-io/plugin'
 import { EditorTextarea } from '@edtr-io/renderer-ui'
 import { Icon, faQuestionCircle, styled } from '@edtr-io/ui'
 import * as React from 'react'
@@ -36,7 +36,7 @@ const HelpIcon: React.FunctionComponent = () => (
 )
 
 export const HighlightEditor = (
-  props: StatefulPluginEditorProps<typeof highlightState> & {
+  props: PluginEditorProps<typeof highlightState> & {
     insert?: (el: { plugin: string }) => void
   }
 ) => {

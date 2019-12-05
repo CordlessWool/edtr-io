@@ -1,4 +1,4 @@
-import { StatefulPluginEditorProps } from '@edtr-io/plugin'
+import { PluginEditorProps } from '@edtr-io/plugin'
 import * as React from 'react'
 import SyntaxHighlight from 'react-syntax-highlighter'
 
@@ -6,7 +6,7 @@ import { highlightState } from '.'
 
 export function HighlightRenderer({
   state
-}: StatefulPluginEditorProps<typeof highlightState>) {
+}: PluginEditorProps<typeof highlightState>) {
   return (
     <SyntaxHighlight
       language={state.language.value}
